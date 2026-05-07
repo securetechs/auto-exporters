@@ -1,0 +1,16 @@
+---
+const brands = ['Toyota', 'BMW', 'Mercedes', 'Audi', 'Ford', 'Nissan', 'Land Rover', 'Kia'];
+---
+
+<section class="py-12 bg-white border-y border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <p class="text-center text-sm text-gray-400 uppercase tracking-wider mb-8 font-medium">Trusted Brands We Export</p>
+    <div class="grid grid-cols-4 lg:grid-cols-8 gap-6 items-center">
+      {brands.map(brand => (
+        <div class="flex items-center justify-center p-4 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-300 cursor-default">
+          <span class="text-sm font-bold text-gray-600 font-[family-name:var(--font-heading)] tracking-wide">{brand}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
