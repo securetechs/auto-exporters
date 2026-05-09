@@ -1,0 +1,32 @@
+---
+title: "2022 Ford Ranger Wildtrak"
+slug: "2022-ford-ranger"
+make: "Ford"
+model: "Ranger Wildtrak"
+year: 2022
+price: 32000
+mileage: 22100
+fuel: "Diesel"
+transmission: "Automatic"
+bodyType: "Pickup Truck"
+color: "Blue"
+description: "Ford Ranger Wildtrak with hardtop canopy, tow bar, and off-road package. Work-ready and export-ready."
+images: []
+featured: true
+---
+
+## Vehicle Details
+
+The Ford Ranger Wildtrak is one of the most capable pickup trucks on the market. This example comes fully loaded with the Wildtrak trim package and additional accessories.
+
+### Key Features
+- Wildtrak leather interior
+- SYNC 3 infotainment with Apple CarPlay
+- Hardtop canopy fitted
+- Tow bar (3,500kg rating)
+- Rear parking camera
+- Electronic locking differential
+- Bi-xenon headlights
+
+### Export Ready
+Extremely popular in African markets. This Ranger is work-ready with full documentation for immediate export.
