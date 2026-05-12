@@ -6,77 +6,136 @@ const featured = allVehicles
   .filter(v => v.data.featured && v.data.images && v.data.images.length > 0)
   .sort((a, b) => b.data.price - a.data.price)
   .slice(0, 4);
+
+const totalVehicles = allVehicles.length;
+
+const makes = ['Make', 'Audi', 'BMW', 'Ford', 'Land Rover', 'McLaren', 'Mercedes-Benz', 'Nissan', 'Porsche', 'Rolls Royce', 'Toyota'];
+const bodyTypes = ['Body', 'Sedan', 'SUV', 'Hatchback', 'Coupe', 'Pickup Truck', 'Crossover'];
+const doors = ['Door', '2', '3', '4', '5'];
+const models = ['Model', 'All Models'];
 ---
 
 <section class="relative bg-[var(--color-dark)] overflow-hidden">
-  <div class="swiper hero-swiper w-full" style="height: 600px;">
+  <!-- Background Carousel -->
+  <div class="swiper hero-swiper w-full" style="height: 680px;">
     <div class="swiper-wrapper">
-      {featured.map((vehicle, i) => (
+      {featured.map(vehicle => (
         <div class="swiper-slide relative">
-          <!-- Background Image -->
           <div class="absolute inset-0">
             <img
               src={vehicle.data.images![0]}
               alt={vehicle.data.title}
               class="w-full h-full object-cover"
             />
-            <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
-          </div>
-
-          <!-- Content Overlay -->
-          <div class="relative h-full flex items-center">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-              <div class="max-w-xl">
-                <div class="flex items-center gap-3 mb-4">
-                  <span class="bg-[var(--color-primary)] text-white text-xs font-semibold px-3 py-1 rounded">
-                    {vehicle.data.condition || 'Used'}
-                  </span>
-                  <span class="text-white/70 text-sm">
-                    {vehicle.data.mileage.toLocaleString()} mi
-                  </span>
-                </div>
-                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-[family-name:var(--font-heading)] leading-tight mb-4">
-                  {vehicle.data.title}
-                </h2>
-                <div class="flex items-center gap-4 mb-6">
-                  <span class="text-2xl font-bold text-[var(--color-primary)] font-[family-name:var(--font-heading)]">
-                    ${vehicle.data.price.toLocaleString()}
-                  </span>
-                  <span class="text-white/50 text-sm">|</span>
-                  <span class="text-white/70 text-sm">{vehicle.data.fuel} &bull; {vehicle.data.transmission}</span>
-                </div>
-                <a
-                  href={`/vehicles/${vehicle.data.slug}`}
-                  class="inline-flex items-center gap-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-8 py-3.5 rounded-lg font-semibold transition-all text-sm"
-                >
-                  View Details
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                </a>
-              </div>
-            </div>
+            <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/30"></div>
           </div>
         </div>
       ))}
     </div>
-    <div class="swiper-pagination !bottom-6"></div>
-    <div class="swiper-button-prev !left-4 !w-11 !h-11"></div>
-    <div class="swiper-button-next !right-4 !w-11 !h-11"></div>
+    <div class="swiper-button-prev hero-prev !left-auto !right-16 !top-auto !bottom-[280px] !w-10 !h-10 after:!text-base"></div>
+    <div class="swiper-button-next hero-next !right-4 !top-auto !bottom-[280px] !w-10 !h-10 after:!text-base"></div>
+  </div>
+
+  <!-- Overlay Content -->
+  <div class="absolute inset-0 z-10 flex flex-col justify-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <!-- Heading -->
+      <div class="mb-8">
+        <p class="text-[var(--color-primary)] text-sm font-medium mb-2">Over {totalVehicles} quality vehicles listed</p>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-[family-name:var(--font-heading)] leading-tight">
+          Find what are you<br />looking for
+        </h1>
+        <p class="text-white/50 text-sm mt-3 max-w-lg">
+          Explore our inventory to buy, sell, trade or simply find your next car
+        </p>
+      </div>
+
+      <!-- Tabs -->
+      <div class="flex gap-3 mb-5" id="hero-tabs">
+        <button class="hero-tab active bg-[var(--color-primary)] text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all" data-tab="all">All</button>
+        <button class="hero-tab bg-[var(--color-dark)]/80 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[var(--color-dark)] transition-all border border-white/20" data-tab="new">New Car</button>
+        <button class="hero-tab bg-[var(--color-dark)]/80 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[var(--color-dark)] transition-all border border-white/20" data-tab="used">Used Car</button>
+      </div>
+
+      <!-- Search Bar -->
+      <form action="/vehicles" method="get" class="bg-white rounded-xl p-4 shadow-xl max-w-5xl">
+        <input type="hidden" name="condition" id="hero-condition" value="" />
+        <div class="flex flex-wrap lg:flex-nowrap items-center gap-3">
+          <select name="make" class="flex-1 min-w-[120px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+            {makes.map(m => <option value={m === 'Make' ? '' : m}>{m}</option>)}
+          </select>
+          <select name="model" class="flex-1 min-w-[100px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+            {models.map(m => <option value={m === 'Model' ? '' : m}>{m}</option>)}
+          </select>
+          <select name="doors" class="flex-1 min-w-[80px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+            {doors.map(d => <option value={d === 'Door' ? '' : d}>{d}</option>)}
+          </select>
+          <select name="body" class="flex-1 min-w-[100px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+            {bodyTypes.map(b => <option value={b === 'Body' ? '' : b}>{b}</option>)}
+          </select>
+          <button type="submit" class="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-6 py-2.5 rounded-lg font-semibold transition-all flex items-center gap-2 text-sm whitespace-nowrap">
+            Find cars
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </button>
+        </div>
+      </form>
+
+      <!-- Body Type Quick Links -->
+      <div class="flex flex-wrap gap-5 mt-5">
+        <a href="/vehicles?bodyType=Coupe" class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M6 17H4v-2l2-4h2l2-3h4l2 3h2l2 4v2h-2"/></svg>
+          Coupe
+        </a>
+        <a href="/vehicles?bodyType=SUV" class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M6 17H4v-2l2-4h2l2-3h4l2 3h2l2 4v2h-2"/></svg>
+          SUV
+        </a>
+        <a href="/vehicles?bodyType=Sedan" class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M6 17H4v-2l2-4h2l2-3h4l2 3h2l2 4v2h-2"/></svg>
+          Sedan
+        </a>
+        <a href="/vehicles?bodyType=Hatchback" class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M6 17H4v-2l2-4h2l2-3h4l2 3h2l2 4v2h-2"/></svg>
+          Hatchback
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
 <script>
   import Swiper from 'swiper';
-  import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+  import { Navigation, Autoplay, EffectFade } from 'swiper/modules';
   import 'swiper/css';
   import 'swiper/css/navigation';
-  import 'swiper/css/pagination';
+  import 'swiper/css/effect-fade';
 
   new Swiper('.hero-swiper', {
-    modules: [Navigation, Pagination, Autoplay],
+    modules: [Navigation, Autoplay, EffectFade],
     loop: true,
+    effect: 'fade',
     autoplay: { delay: 5000, disableOnInteraction: false },
-    pagination: { el: '.swiper-pagination', clickable: true },
-    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-    speed: 600,
+    navigation: { nextEl: '.hero-next', prevEl: '.hero-prev' },
+    speed: 800,
+  });
+
+  // Hero tabs
+  const heroTabs = document.querySelectorAll<HTMLButtonElement>('.hero-tab');
+  const condInput = document.getElementById('hero-condition') as HTMLInputElement;
+
+  heroTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      heroTabs.forEach(t => {
+        t.classList.remove('active', 'bg-[var(--color-primary)]');
+        t.classList.add('bg-[var(--color-dark)]/80', 'border', 'border-white/20');
+      });
+      tab.classList.add('active', 'bg-[var(--color-primary)]');
+      tab.classList.remove('bg-[var(--color-dark)]/80', 'border', 'border-white/20');
+
+      const val = tab.dataset.tab;
+      if (condInput) {
+        condInput.value = val === 'new' ? 'New' : val === 'used' ? 'Used' : '';
+      }
+    });
   });
 </script>
