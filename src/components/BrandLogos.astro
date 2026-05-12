@@ -13,14 +13,18 @@ const brands = Array.from(makeCounts.entries())
   .sort((a, b) => b[1] - a[1])
   .map(([name, count]) => ({ name, count }));
 
-// Body types with car images from theme
+// Body types with car images from theme — all 10 matching Home 03 demo
 const bodyTypes = [
   { name: 'Coupe', image: '/assets/images/icon-box/car-list1.png' },
-  { name: 'SUV', image: '/assets/images/icon-box/car-list2.png' },
+  { name: 'MVP', image: '/assets/images/icon-box/car-list2.png' },
   { name: 'Sedan', image: '/assets/images/icon-box/car-list3.png' },
   { name: 'Hatchback', image: '/assets/images/icon-box/car-list4.png' },
-  { name: 'Pickup Truck', image: '/assets/images/icon-box/car-list5.png' },
-  { name: 'Crossover', image: '/assets/images/icon-box/car-list6.png' },
+  { name: 'SUV', image: '/assets/images/icon-box/car-list5.png' },
+  { name: 'Pickup Truck', image: '/assets/images/icon-box/car-list6.png' },
+  { name: 'Minivan', image: '/assets/images/icon-box/car-list7.png' },
+  { name: 'Crossover', image: '/assets/images/icon-box/car-list8.png' },
+  { name: 'Station Wagon', image: '/assets/images/icon-box/car-list1.png' },
+  { name: 'Convertible', image: '/assets/images/icon-box/car-list3.png' },
 ];
 
 // Count vehicles per body type

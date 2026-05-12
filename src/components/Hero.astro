@@ -15,18 +15,13 @@ const doors = ['Door', '2', '3', '4', '5'];
 const models = ['Model', 'All Models'];
 const fuelTypes = ['Fuel Type', 'Petrol', 'Diesel', 'Electric', 'Hybrid'];
 const transmissions = ['Transmission', 'Automatic', 'Manual', 'CVT'];
-
-const heroSlides = [
-  { heading: 'Find what are you<br />looking for' },
-  { heading: "Let's find your next drive<br />in your city" },
-];
 ---
 
 <section class="relative bg-[var(--color-dark)] overflow-hidden">
   <!-- Background Carousel -->
   <div class="swiper hero-swiper w-full" style="height: 720px;">
     <div class="swiper-wrapper">
-      {featured.map((vehicle, i) => (
+      {featured.map(vehicle => (
         <div class="swiper-slide relative">
           <div class="absolute inset-0">
             <img
@@ -57,35 +52,46 @@ const heroSlides = [
         </p>
       </div>
 
-      <!-- Tabs -->
-      <div class="flex gap-3 mb-5" id="hero-tabs">
-        <button class="hero-tab active bg-[var(--color-primary)] text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all" data-tab="all">All</button>
-        <button class="hero-tab bg-[var(--color-dark)]/80 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[var(--color-dark)] transition-all border border-white/20" data-tab="new">New Car</button>
-        <button class="hero-tab bg-[var(--color-dark)]/80 text-white px-6 py-2.5 rounded-full text-sm font-semibold hover:bg-[var(--color-dark)] transition-all border border-white/20" data-tab="used">Used Car</button>
-      </div>
-
-      <!-- Search Bar -->
-      <form action="/vehicles" method="get" class="bg-white rounded-xl p-4 shadow-xl max-w-5xl">
-        <input type="hidden" name="condition" id="hero-condition" value="" />
-        <div class="flex flex-wrap lg:flex-nowrap items-center gap-3">
-          <select name="make" class="flex-1 min-w-[110px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
-            {makes.map(m => <option value={m === 'Make' ? '' : m}>{m}</option>)}
-          </select>
-          <select name="model" class="flex-1 min-w-[90px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
-            {models.map(m => <option value={m === 'Model' ? '' : m}>{m}</option>)}
-          </select>
-          <select name="doors" class="flex-1 min-w-[70px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
-            {doors.map(d => <option value={d === 'Door' ? '' : d}>{d}</option>)}
-          </select>
-          <select name="body" class="flex-1 min-w-[100px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
-            {bodyTypes.map(b => <option value={b === 'Body Type' ? '' : b}>{b}</option>)}
-          </select>
-          <button type="submit" class="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-6 py-2.5 rounded-lg font-semibold transition-all flex items-center gap-2 text-sm whitespace-nowrap">
-            Find cars
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          </button>
+      <!-- Search Bar with Tabs -->
+      <div class="bg-white rounded-xl shadow-xl max-w-5xl overflow-hidden">
+        <!-- Tabs - flat text style like demo -->
+        <div class="flex border-b border-gray-100" id="hero-tabs">
+          <button class="hero-tab active px-6 py-3.5 text-sm font-semibold text-[var(--color-primary)] border-b-2 border-[var(--color-primary)] transition-all" data-tab="all">All</button>
+          <button class="hero-tab px-6 py-3.5 text-sm font-semibold text-gray-500 hover:text-[var(--color-primary)] border-b-2 border-transparent transition-all" data-tab="new">New Car</button>
+          <button class="hero-tab px-6 py-3.5 text-sm font-semibold text-gray-500 hover:text-[var(--color-primary)] border-b-2 border-transparent transition-all" data-tab="used">Used Car</button>
         </div>
-      </form>
+
+        <!-- Search Fields -->
+        <form action="/vehicles" method="get" class="p-4 lg:p-5">
+          <input type="hidden" name="condition" id="hero-condition" value="" />
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            <select name="make" class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+              {makes.map(m => <option value={m === 'Make' ? '' : m}>{m}</option>)}
+            </select>
+            <select name="model" class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+              {models.map(m => <option value={m === 'Model' ? '' : m}>{m}</option>)}
+            </select>
+            <select name="doors" class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+              {doors.map(d => <option value={d === 'Door' ? '' : d}>{d}</option>)}
+            </select>
+            <select name="body" class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+              {bodyTypes.map(b => <option value={b === 'Body Type' ? '' : b}>{b}</option>)}
+            </select>
+            <select name="fuel" class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+              {fuelTypes.map(f => <option value={f === 'Fuel Type' ? '' : f}>{f}</option>)}
+            </select>
+            <select name="transmission" class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+              {transmissions.map(t => <option value={t === 'Transmission' ? '' : t}>{t}</option>)}
+            </select>
+          </div>
+          <div class="mt-4 flex justify-end">
+            <button type="submit" class="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-8 py-2.5 rounded-lg font-semibold transition-all flex items-center gap-2 text-sm">
+              Find cars
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
 
       <!-- Body Type Quick Links -->
       <div class="flex flex-wrap gap-5 mt-5">
@@ -134,7 +140,7 @@ const heroSlides = [
     "Let's find your next drive<br />in your city",
   ];
 
-  const heroSwiper = new Swiper('.hero-swiper', {
+  new Swiper('.hero-swiper', {
     modules: [Navigation, Autoplay, EffectFade],
     loop: true,
     effect: 'fade',
@@ -152,18 +158,18 @@ const heroSlides = [
     },
   });
 
-  // Hero tabs
+  // Hero tabs - flat text style
   const heroTabs = document.querySelectorAll<HTMLButtonElement>('.hero-tab');
   const condInput = document.getElementById('hero-condition') as HTMLInputElement;
 
   heroTabs.forEach(tab => {
     tab.addEventListener('click', () => {
       heroTabs.forEach(t => {
-        t.classList.remove('active', 'bg-[var(--color-primary)]');
-        t.classList.add('bg-[var(--color-dark)]/80', 'border', 'border-white/20');
+        t.classList.remove('active', 'text-[var(--color-primary)]', 'border-[var(--color-primary)]');
+        t.classList.add('text-gray-500', 'border-transparent');
       });
-      tab.classList.add('active', 'bg-[var(--color-primary)]');
-      tab.classList.remove('bg-[var(--color-dark)]/80', 'border', 'border-white/20');
+      tab.classList.add('active', 'text-[var(--color-primary)]', 'border-[var(--color-primary)]');
+      tab.classList.remove('text-gray-500', 'border-transparent');
 
       const val = tab.dataset.tab;
       if (condInput) {
