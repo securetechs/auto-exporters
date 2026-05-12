@@ -1,21 +1,169 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog');
+
+// Filter out drafts and sort by date (newest first)
+const posts = allPosts
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+// Extract unique categories
+const categories = [...new Set(posts.map(p => p.data.category))].sort();
+
+// Format date
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+}
 ---
 
-<Layout title="Blog - AutoDeal">
-  <section class="bg-gradient-to-br from-[var(--color-dark)] to-gray-900 py-16">
+<Layout title="Blog - AutoDeal" description="Expert guides, vehicle reviews, and industry insights about vehicle export from the UK.">
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-[var(--color-dark)] to-gray-900 py-14 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h1 class="text-4xl font-bold text-white font-[family-name:var(--font-heading)]">Blog</h1>
-      <p class="text-gray-400 mt-3">News, guides, and insights about vehicle export</p>
+      <span class="text-[var(--color-primary)] text-sm font-semibold uppercase tracking-wider">Our Blog</span>
+      <h1 class="text-3xl lg:text-4xl font-bold text-white font-[family-name:var(--font-heading)] mt-2">News & Guides</h1>
+      <p class="text-gray-400 mt-3 max-w-xl mx-auto">Expert advice, industry news, and vehicle insights to help you make informed export decisions.</p>
     </div>
   </section>
 
-  <section class="py-12">
+  <!-- Category Filter + Posts -->
+  <section class="py-10 lg:py-14">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="bg-orange-50 border border-orange-200 rounded-2xl p-8 text-center">
-        <p class="text-[var(--color-primary)] font-semibold font-[family-name:var(--font-heading)]">Blog Coming Soon</p>
-        <p class="text-gray-500 text-sm mt-2">Articles and guides will be published here shortly.</p>
+
+      <!-- Category Pills -->
+      <div class="flex flex-wrap gap-2 mb-8">
+        <button class="category-pill active bg-[var(--color-primary)] text-white text-sm font-medium px-5 py-2 rounded-full transition-all" data-category="all">
+          All Posts
+        </button>
+        {categories.map(cat => (
+          <button class="category-pill bg-gray-100 text-gray-600 hover:bg-gray-200 text-sm font-medium px-5 py-2 rounded-full transition-all" data-category={cat}>
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      <!-- Posts Grid -->
+      <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {posts.map(post => (
+          <a
+            href={`/blog/${post.data.slug}`}
+            class="blog-card group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg hover:border-[var(--color-primary)]/20 transition-all duration-300"
+            data-category={post.data.category}
+          >
+            <!-- Image -->
+            <div class="relative aspect-[16/9] bg-gray-100 overflow-hidden">
+              {post.data.image ? (
+                <img src={post.data.image} alt={post.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              ) : (
+                <div class="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-orange-50 to-orange-100">
+                  <svg class="w-12 h-12 text-[var(--color-primary)]/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                  </svg>
+                </div>
+              )}
+              <!-- Category Badge -->
+              <span class="absolute top-3 left-3 bg-[var(--color-primary)] text-white text-xs font-semibold px-3 py-1 rounded-full">
+                {post.data.category}
+              </span>
+            </div>
+
+            <!-- Content -->
+            <div class="p-5">
+              <div class="flex items-center gap-3 text-xs text-gray-400 mb-3">
+                <span class="flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  {formatDate(post.data.date)}
+                </span>
+                <span class="flex items-center gap-1">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                  {post.data.author}
+                </span>
+              </div>
+
+              <h2 class="font-semibold text-gray-900 group-hover:text-[var(--color-primary)] transition-colors font-[family-name:var(--font-heading)] text-lg leading-tight mb-2">
+                {post.data.title}
+              </h2>
+
+              <p class="text-sm text-gray-500 line-clamp-2 mb-4">{post.data.description}</p>
+
+              <span class="inline-flex items-center gap-1 text-sm font-semibold text-[var(--color-primary)] group-hover:gap-2 transition-all">
+                Read More
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <!-- No results -->
+      <div id="no-posts" class="hidden py-16 text-center">
+        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+        <h3 class="text-lg font-semibold text-gray-900 font-[family-name:var(--font-heading)]">No posts in this category</h3>
+        <p class="text-gray-500 text-sm mt-1">Try selecting a different category or view all posts.</p>
+      </div>
+
+      <!-- Post Count -->
+      <div class="mt-8 text-center">
+        <p class="text-sm text-gray-400">
+          Showing <span id="post-count" class="font-semibold text-gray-600">{posts.length}</span> posts
+        </p>
       </div>
     </div>
   </section>
 </Layout>
+
+<script>
+  const pills = document.querySelectorAll<HTMLButtonElement>('.category-pill');
+  const cards = document.querySelectorAll<HTMLElement>('.blog-card');
+  const grid = document.getElementById('posts-grid')!;
+  const noPosts = document.getElementById('no-posts')!;
+  const postCount = document.getElementById('post-count')!;
+
+  // Read category from URL
+  function getActiveCategory(): string {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('category') || 'all';
+  }
+
+  function setActiveCategory(cat: string) {
+    // Update pills
+    pills.forEach(pill => {
+      const isActive = pill.dataset.category === cat;
+      pill.classList.toggle('active', isActive);
+      pill.classList.toggle('bg-[var(--color-primary)]', isActive);
+      pill.classList.toggle('text-white', isActive);
+      pill.classList.toggle('bg-gray-100', !isActive);
+      pill.classList.toggle('text-gray-600', !isActive);
+    });
+
+    // Filter cards
+    let visible = 0;
+    cards.forEach(card => {
+      const show = cat === 'all' || card.dataset.category === cat;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    postCount.textContent = String(visible);
+    noPosts.classList.toggle('hidden', visible > 0);
+    grid.classList.toggle('hidden', visible === 0);
+
+    // Update URL
+    const url = cat === 'all'
+      ? window.location.pathname
+      : `${window.location.pathname}?category=${encodeURIComponent(cat)}`;
+    window.history.replaceState({}, '', url);
+  }
+
+  // Event listeners
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      setActiveCategory(pill.dataset.category || 'all');
+    });
+  });
+
+  // Init from URL
+  setActiveCategory(getActiveCategory());
+</script>
