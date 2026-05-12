@@ -11,7 +11,10 @@ transmission: "Automatic"
 bodyType: "SUV"
 color: "White"
 description: "Excellent condition Toyota Land Cruiser VX with full service history. Perfect for export to Africa or Middle East. Low mileage, well-maintained, and ready for shipping."
-images: []
+images:
+  - "https://images.unsplash.com/photo-1594502184342-2e12f877aa73?w=800&q=80"
+  - "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=800&q=80"
+  - "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=800&q=80"
 featured: true
 ---
 

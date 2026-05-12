@@ -11,7 +11,10 @@ transmission: "Automatic"
 bodyType: "SUV"
 color: "Green"
 description: "Rare Land Rover Defender V8 with only 3,200 miles. Supercharged 5.0L V8 producing 518hp. Collector-grade export vehicle."
-images: []
+images:
+  - "https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?w=800&q=80"
+  - "https://images.unsplash.com/photo-1519245659620-e859806a8d3b?w=800&q=80"
+  - "https://images.unsplash.com/photo-1583267746897-2cf415887172?w=800&q=80"
 featured: false
 ---
 
