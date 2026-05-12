@@ -10,16 +10,23 @@ const featured = allVehicles
 const totalVehicles = allVehicles.length;
 
 const makes = ['Make', 'Audi', 'BMW', 'Ford', 'Land Rover', 'McLaren', 'Mercedes-Benz', 'Nissan', 'Porsche', 'Rolls Royce', 'Toyota'];
-const bodyTypes = ['Body', 'Sedan', 'SUV', 'Hatchback', 'Coupe', 'Pickup Truck', 'Crossover'];
+const bodyTypes = ['Body Type', 'Sedan', 'SUV', 'Hatchback', 'Coupe', 'Pickup Truck', 'Crossover', 'Minivan', 'Convertible'];
 const doors = ['Door', '2', '3', '4', '5'];
 const models = ['Model', 'All Models'];
+const fuelTypes = ['Fuel Type', 'Petrol', 'Diesel', 'Electric', 'Hybrid'];
+const transmissions = ['Transmission', 'Automatic', 'Manual', 'CVT'];
+
+const heroSlides = [
+  { heading: 'Find what are you<br />looking for' },
+  { heading: "Let's find your next drive<br />in your city" },
+];
 ---
 
 <section class="relative bg-[var(--color-dark)] overflow-hidden">
   <!-- Background Carousel -->
-  <div class="swiper hero-swiper w-full" style="height: 680px;">
+  <div class="swiper hero-swiper w-full" style="height: 720px;">
     <div class="swiper-wrapper">
-      {featured.map(vehicle => (
+      {featured.map((vehicle, i) => (
         <div class="swiper-slide relative">
           <div class="absolute inset-0">
             <img
@@ -27,13 +34,13 @@ const models = ['Model', 'All Models'];
               alt={vehicle.data.title}
               class="w-full h-full object-cover"
             />
-            <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-black/30"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/30"></div>
           </div>
         </div>
       ))}
     </div>
-    <div class="swiper-button-prev hero-prev !left-auto !right-16 !top-auto !bottom-[280px] !w-10 !h-10 after:!text-base"></div>
-    <div class="swiper-button-next hero-next !right-4 !top-auto !bottom-[280px] !w-10 !h-10 after:!text-base"></div>
+    <div class="swiper-button-prev hero-prev !left-auto !right-16 !top-auto !bottom-[300px] !w-10 !h-10 after:!text-base"></div>
+    <div class="swiper-button-next hero-next !right-4 !top-auto !bottom-[300px] !w-10 !h-10 after:!text-base"></div>
   </div>
 
   <!-- Overlay Content -->
@@ -41,12 +48,12 @@ const models = ['Model', 'All Models'];
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <!-- Heading -->
       <div class="mb-8">
-        <p class="text-[var(--color-primary)] text-sm font-medium mb-2">Over {totalVehicles} quality vehicles listed</p>
-        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-[family-name:var(--font-heading)] leading-tight">
+        <p class="text-[var(--color-primary)] text-sm font-medium mb-2">Over {totalVehicles.toLocaleString()} classified ads listing</p>
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-[family-name:var(--font-heading)] leading-tight hero-heading">
           Find what are you<br />looking for
         </h1>
         <p class="text-white/50 text-sm mt-3 max-w-lg">
-          Explore our inventory to buy, sell, trade or simply find your next car
+          Explore the worlds largest database to buy, sell, trade or simply rent a car
         </p>
       </div>
 
@@ -61,19 +68,19 @@ const models = ['Model', 'All Models'];
       <form action="/vehicles" method="get" class="bg-white rounded-xl p-4 shadow-xl max-w-5xl">
         <input type="hidden" name="condition" id="hero-condition" value="" />
         <div class="flex flex-wrap lg:flex-nowrap items-center gap-3">
-          <select name="make" class="flex-1 min-w-[120px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+          <select name="make" class="flex-1 min-w-[110px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
             {makes.map(m => <option value={m === 'Make' ? '' : m}>{m}</option>)}
           </select>
-          <select name="model" class="flex-1 min-w-[100px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+          <select name="model" class="flex-1 min-w-[90px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
             {models.map(m => <option value={m === 'Model' ? '' : m}>{m}</option>)}
           </select>
-          <select name="doors" class="flex-1 min-w-[80px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
+          <select name="doors" class="flex-1 min-w-[70px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
             {doors.map(d => <option value={d === 'Door' ? '' : d}>{d}</option>)}
           </select>
           <select name="body" class="flex-1 min-w-[100px] bg-transparent border-b border-gray-200 px-3 py-2.5 text-sm text-gray-700 outline-none focus:border-[var(--color-primary)] transition-colors">
-            {bodyTypes.map(b => <option value={b === 'Body' ? '' : b}>{b}</option>)}
+            {bodyTypes.map(b => <option value={b === 'Body Type' ? '' : b}>{b}</option>)}
           </select>
-          <button type="submit" class="bg-[#4739EC] hover:bg-[#3a2dc7] text-white px-6 py-2.5 rounded-lg font-semibold transition-all flex items-center gap-2 text-sm whitespace-nowrap">
+          <button type="submit" class="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-6 py-2.5 rounded-lg font-semibold transition-all flex items-center gap-2 text-sm whitespace-nowrap">
             Find cars
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </button>
@@ -98,6 +105,18 @@ const models = ['Model', 'All Models'];
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M6 17H4v-2l2-4h2l2-3h4l2 3h2l2 4v2h-2"/></svg>
           Hatchback
         </a>
+        <a href="/vehicles?bodyType=Pickup+Truck" class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M6 17H4v-2l2-4h2l2-3h4l2 3h2l2 4v2h-2"/></svg>
+          Pickup Truck
+        </a>
+        <a href="/vehicles?bodyType=Minivan" class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M6 17H4v-2l2-4h2l2-3h4l2 3h2l2 4v2h-2"/></svg>
+          Minivan
+        </a>
+        <a href="/vehicles?bodyType=Crossover" class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M6 17H4v-2l2-4h2l2-3h4l2 3h2l2 4v2h-2"/></svg>
+          Crossover
+        </a>
       </div>
     </div>
   </div>
@@ -110,13 +129,27 @@ const models = ['Model', 'All Models'];
   import 'swiper/css/navigation';
   import 'swiper/css/effect-fade';
 
-  new Swiper('.hero-swiper', {
+  const heroHeadings = [
+    'Find what are you<br />looking for',
+    "Let's find your next drive<br />in your city",
+  ];
+
+  const heroSwiper = new Swiper('.hero-swiper', {
     modules: [Navigation, Autoplay, EffectFade],
     loop: true,
     effect: 'fade',
     autoplay: { delay: 5000, disableOnInteraction: false },
     navigation: { nextEl: '.hero-next', prevEl: '.hero-prev' },
     speed: 800,
+    on: {
+      slideChange: function () {
+        const heading = document.querySelector('.hero-heading');
+        if (heading) {
+          const idx = this.realIndex % heroHeadings.length;
+          heading.innerHTML = heroHeadings[idx];
+        }
+      },
+    },
   });
 
   // Hero tabs
