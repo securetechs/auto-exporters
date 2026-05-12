@@ -1,0 +1,44 @@
+---
+const partners = [
+  'Toyota', 'BMW', 'Mercedes-Benz', 'Audi', 'Ford', 'Land Rover',
+  'Nissan', 'Porsche', 'McLaren', 'Rolls Royce', 'Jeep', 'KIA',
+];
+---
+
+<section class="py-12 bg-white border-t border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="swiper partner-swiper">
+      <div class="swiper-wrapper items-center">
+        {partners.map(name => (
+          <div class="swiper-slide">
+            <a href={`/vehicles?make=${name}`} class="flex items-center justify-center h-16 px-6 text-gray-400 hover:text-[var(--color-primary)] transition-colors">
+              <span class="text-lg font-bold font-[family-name:var(--font-heading)] whitespace-nowrap">{name}</span>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import Swiper from 'swiper';
+  import { Autoplay } from 'swiper/modules';
+  import 'swiper/css';
+
+  new Swiper('.partner-swiper', {
+    modules: [Autoplay],
+    slidesPerView: 3,
+    spaceBetween: 20,
+    loop: true,
+    autoplay: { delay: 2000, disableOnInteraction: false },
+    speed: 600,
+    breakpoints: {
+      480: { slidesPerView: 4 },
+      640: { slidesPerView: 5 },
+      768: { slidesPerView: 6 },
+      1024: { slidesPerView: 7 },
+      1280: { slidesPerView: 8 },
+    },
+  });
+</script>

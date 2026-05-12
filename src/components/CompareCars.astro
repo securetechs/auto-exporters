@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+
+const allVehicles = await getCollection('vehicles');
+const vehicles = allVehicles
+  .filter(v => v.data.images && v.data.images.length > 0)
+  .sort((a, b) => b.data.price - a.data.price)
+  .slice(0, 4);
+
+// Create pairs for comparison
+const pairs = [];
+for (let i = 0; i < vehicles.length - 1; i += 2) {
+  pairs.push([vehicles[i], vehicles[i + 1]]);
+}
+---
+
+<section class="py-16 lg:py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-10">
+      <span class="text-[var(--color-primary)] text-sm font-semibold uppercase tracking-wider">Compare</span>
+      <h2 class="text-3xl font-bold text-gray-900 mt-2 font-[family-name:var(--font-heading)]">Compare to buy the right car</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      {pairs.map(pair => (
+        <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-lg transition-all">
+          <div class="grid grid-cols-2">
+            {pair.map(v => (
+              <div class="p-4">
+                <div class="aspect-[4/3] bg-gray-100 rounded-xl overflow-hidden mb-3">
+                  <img src={v.data.images![0]} alt={v.data.title} class="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <h4 class="font-semibold text-sm text-gray-900 font-[family-name:var(--font-heading)]">{v.data.make}</h4>
+                <p class="text-xs text-gray-500">{v.data.title}</p>
+                <p class="text-[var(--color-primary)] font-bold text-sm mt-1 font-[family-name:var(--font-heading)]">${v.data.price.toLocaleString()}</p>
+              </div>
+            ))}
+          </div>
+          <div class="border-t border-gray-100 px-4 py-3">
+            <div class="grid grid-cols-2 gap-4 text-xs">
+              {pair.map(v => (
+                <div class="space-y-1.5">
+                  <div class="flex justify-between"><span class="text-gray-400">Body</span><span class="text-gray-700">{v.data.bodyType}</span></div>
+                  <div class="flex justify-between"><span class="text-gray-400">Fuel</span><span class="text-gray-700">{v.data.fuel}</span></div>
+                  <div class="flex justify-between"><span class="text-gray-400">Trans</span><span class="text-gray-700">{v.data.transmission}</span></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
