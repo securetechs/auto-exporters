@@ -1,95 +1,184 @@
 ---
 const navLinks = [
   { name: 'Home', href: '/' },
-  { name: 'Vehicles', href: '/vehicles' },
-  { name: 'Destinations', href: '/countries' },
-  { name: 'About', href: '/about' },
+  {
+    name: 'Listing Car',
+    href: '/vehicles',
+    dropdown: [
+      { name: 'All Vehicles', href: '/vehicles' },
+      { name: 'SUV', href: '/vehicles?body=SUV' },
+      { name: 'Sedan', href: '/vehicles?body=Sedan' },
+      { name: 'Pickup Truck', href: '/vehicles?body=Pickup Truck' },
+      { name: 'Hatchback', href: '/vehicles?body=Hatchback' },
+    ]
+  },
+  {
+    name: 'Pages',
+    href: '#',
+    dropdown: [
+      { name: 'About Us', href: '/about' },
+      { name: 'Destinations', href: '/countries' },
+      { name: 'Contact', href: '/contact' },
+    ]
+  },
   { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
 ];
 ---
 
-<header class="bg-white shadow-sm sticky top-0 z-50">
+<header id="site-header" class="w-full z-50">
   <!-- Top Bar -->
   <div class="bg-[var(--color-dark)] text-white text-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-10">
-      <div class="flex items-center gap-6">
-        <a href="mailto:info@autodeal.com" class="flex items-center gap-1.5 hover:text-[var(--color-primary)] transition-colors">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          info@autodeal.com
+      <div class="flex items-center gap-4">
+        <a href="#" class="hover:text-[var(--color-primary)] transition-colors" aria-label="Facebook">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
         </a>
-        <a href="tel:+442071234567" class="hidden sm:flex items-center gap-1.5 hover:text-[var(--color-primary)] transition-colors">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
-          +44 207 123 4567
+        <a href="#" class="hover:text-[var(--color-primary)] transition-colors" aria-label="Twitter">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+        </a>
+        <a href="#" class="hover:text-[var(--color-primary)] transition-colors" aria-label="Instagram">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="#" class="hover:text-[var(--color-primary)] transition-colors" aria-label="YouTube">
+          <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
         </a>
       </div>
       <div class="flex items-center gap-4">
-        <a href="#" class="hover:text-[var(--color-primary)] transition-colors">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+        <a href="#" class="hover:text-[var(--color-primary)] transition-colors flex items-center gap-1.5">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          Login
         </a>
-        <a href="#" class="hover:text-[var(--color-primary)] transition-colors">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        </a>
-        <a href="#" class="hover:text-[var(--color-primary)] transition-colors">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+        <span class="text-white/30">|</span>
+        <a href="#" class="hover:text-[var(--color-primary)] transition-colors flex items-center gap-1.5">
+          Register
         </a>
       </div>
     </div>
   </div>
 
   <!-- Main Nav -->
-  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16 lg:h-20">
-      <!-- Logo -->
-      <a href="/" class="flex items-center gap-2">
-        <div class="w-10 h-10 bg-[var(--color-primary)] rounded-lg flex items-center justify-center">
-          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        </div>
-        <span class="text-xl font-bold font-[family-name:var(--font-heading)] text-[var(--color-dark)]">Auto<span class="text-[var(--color-primary)]">Exporters</span></span>
-      </a>
-
-      <!-- Desktop Nav -->
-      <div class="hidden lg:flex items-center gap-8">
-        {navLinks.map(link => (
-          <a href={link.href} class="text-[15px] font-medium text-gray-700 hover:text-[var(--color-primary)] transition-colors font-[family-name:var(--font-heading)]">
-            {link.name}
-          </a>
-        ))}
-      </div>
-
-      <!-- CTA -->
-      <div class="hidden lg:flex items-center gap-4">
-        <a href="/contact" class="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-6 py-2.5 rounded-full text-sm font-semibold transition-all hover:shadow-lg">
-          Get Quote
+  <nav id="main-nav" class="bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16 lg:h-20">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2 shrink-0">
+          <div class="w-9 h-9 bg-[var(--color-primary)] rounded-lg flex items-center justify-center">
+            <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.21.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/></svg>
+          </div>
+          <span class="text-xl font-bold font-[family-name:var(--font-heading)] text-[var(--color-dark)]">Auto<span class="text-[var(--color-primary)]">Deal</span></span>
         </a>
-      </div>
 
-      <!-- Mobile Menu Button -->
-      <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-700 hover:text-[var(--color-primary)]">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-1">
+          {navLinks.map(link => (
+            <div class="relative group">
+              <a href={link.href} class="flex items-center gap-1 px-4 py-2 text-[15px] font-medium text-[var(--color-dark)] hover:text-[var(--color-primary)] transition-colors font-[family-name:var(--font-heading)]">
+                {link.name}
+                {link.dropdown && (
+                  <svg class="w-3.5 h-3.5 mt-0.5 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                )}
+              </a>
+              {link.dropdown && (
+                <div class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  <div class="bg-white rounded-lg shadow-lg border border-gray-100 py-2 min-w-[200px]">
+                    {link.dropdown.map(item => (
+                      <a href={item.href} class="block px-4 py-2 text-sm text-gray-600 hover:text-[var(--color-primary)] hover:bg-gray-50 transition-colors">
+                        {item.name}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        <!-- CTA + Mobile -->
+        <div class="flex items-center gap-3">
+          <a href="/contact" class="hidden lg:inline-flex bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all hover:shadow-lg font-[family-name:var(--font-heading)]">
+            Get Quote
+          </a>
+          <button id="mobile-menu-btn" class="lg:hidden p-2 text-gray-700 hover:text-[var(--color-primary)]" aria-label="Toggle menu">
+            <svg id="menu-open-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            <svg id="menu-close-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Mobile Nav -->
-    <div id="mobile-menu" class="hidden lg:hidden pb-4 border-t border-gray-100">
-      <div class="flex flex-col gap-1 pt-4">
+    <div id="mobile-menu" class="hidden lg:hidden border-t border-gray-100 bg-white">
+      <div class="max-w-7xl mx-auto px-4 py-4 space-y-1">
         {navLinks.map(link => (
-          <a href={link.href} class="px-4 py-2.5 text-gray-700 hover:text-[var(--color-primary)] hover:bg-gray-50 rounded-lg text-sm font-medium transition-colors">
-            {link.name}
-          </a>
+          <div class="mobile-nav-item">
+            {link.dropdown ? (
+              <div>
+                <button class="mobile-dropdown-btn w-full flex justify-between items-center px-4 py-3 text-[var(--color-dark)] font-medium rounded-lg hover:bg-gray-50 transition-colors">
+                  {link.name}
+                  <svg class="w-4 h-4 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div class="mobile-dropdown hidden pl-4 space-y-1 mt-1">
+                  {link.dropdown.map(item => (
+                    <a href={item.href} class="block px-4 py-2 text-sm text-gray-600 hover:text-[var(--color-primary)] rounded-lg hover:bg-gray-50 transition-colors">
+                      {item.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <a href={link.href} class="block px-4 py-3 text-[var(--color-dark)] font-medium rounded-lg hover:bg-gray-50 transition-colors">
+                {link.name}
+              </a>
+            )}
+          </div>
         ))}
-        <a href="/contact" class="mx-4 mt-2 bg-[var(--color-primary)] text-white text-center px-6 py-2.5 rounded-full text-sm font-semibold">
-          Get Quote
-        </a>
+        <div class="pt-3 border-t border-gray-100">
+          <a href="/contact" class="block text-center bg-[var(--color-primary)] text-white px-6 py-3 rounded-lg text-sm font-semibold">
+            Get Quote
+          </a>
+        </div>
       </div>
     </div>
   </nav>
 </header>
 
 <script>
+  // Mobile menu toggle
   const btn = document.getElementById('mobile-menu-btn');
   const menu = document.getElementById('mobile-menu');
+  const openIcon = document.getElementById('menu-open-icon');
+  const closeIcon = document.getElementById('menu-close-icon');
+
   btn?.addEventListener('click', () => {
+    const isOpen = !menu?.classList.contains('hidden');
     menu?.classList.toggle('hidden');
+    openIcon?.classList.toggle('hidden', !isOpen);
+    closeIcon?.classList.toggle('hidden', isOpen);
+  });
+
+  // Mobile dropdown accordion
+  document.querySelectorAll('.mobile-dropdown-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const dropdown = btn.nextElementSibling;
+      const arrow = btn.querySelector('svg');
+      dropdown?.classList.toggle('hidden');
+      arrow?.classList.toggle('rotate-180');
+    });
+  });
+
+  // Sticky header on scroll
+  const header = document.getElementById('site-header');
+  const mainNav = document.getElementById('main-nav');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+    if (scrollY > 100) {
+      mainNav?.classList.add('header-sticky');
+    } else {
+      mainNav?.classList.remove('header-sticky');
+    }
+    lastScroll = scrollY;
   });
 </script>

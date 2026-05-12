@@ -1,59 +1,86 @@
 ---
-const makes = ['Any Make', 'Audi', 'BMW', 'Ford', 'Jeep', 'Kia', 'Land Rover', 'Mercedes Benz', 'Nissan', 'Toyota'];
+const makes = ['Any Make', 'Audi', 'BMW', 'Ford', 'Jeep', 'Kia', 'Land Rover', 'Mercedes-Benz', 'Nissan', 'Toyota'];
 const bodyTypes = ['Any Body', 'Sedan', 'SUV', 'Hatchback', 'Coupe', 'Pickup Truck', 'Crossover', 'Minivan', 'Convertible'];
-const yearRange = ['Any Year', '2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015'];
-const priceRange = ['Any Price', 'Under $10,000', '$10,000 - $20,000', '$20,000 - $30,000', '$30,000 - $50,000', '$50,000+'];
+const fuelTypes = ['Any Fuel', 'Petrol', 'Diesel', 'Electric', 'Hybrid'];
+const transmissions = ['Any Transmission', 'Automatic', 'Manual', 'CVT'];
+const yearRange = ['Any Year', '2026', '2025', '2024', '2023', '2022', '2021', '2020', '2019', '2018'];
+const priceRange = ['Any Price', 'Under $10,000', '$10,000 - $20,000', '$20,000 - $30,000', '$30,000 - $50,000', '$50,000 - $80,000', '$80,000+'];
 ---
 
-<section class="relative -mt-8 z-20">
-  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 md:p-8">
-      <div class="flex items-center justify-between mb-6">
-        <h2 class="text-lg font-semibold text-gray-900 font-[family-name:var(--font-heading)]">Find Your Vehicle</h2>
-        <a href="/vehicles" class="text-sm text-[var(--color-primary)] hover:underline font-medium">Advanced Search</a>
+<section class="relative -mt-12 z-20">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+      <!-- Tabs -->
+      <div class="flex border-b border-gray-100" id="search-tabs">
+        <button class="tab-btn active px-6 py-4 text-sm font-semibold" data-tab="all">All Car</button>
+        <button class="tab-btn px-6 py-4 text-sm font-semibold" data-tab="new">New Car</button>
+        <button class="tab-btn px-6 py-4 text-sm font-semibold" data-tab="used">Used Car</button>
       </div>
 
-      <form action="/vehicles" method="get" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <!-- Make -->
-        <div>
-          <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Make</label>
-          <select name="make" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all appearance-none cursor-pointer">
-            {makes.map(m => <option value={m === 'Any Make' ? '' : m}>{m}</option>)}
-          </select>
-        </div>
-
-        <!-- Body Type -->
-        <div>
-          <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Body Type</label>
-          <select name="body" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all appearance-none cursor-pointer">
-            {bodyTypes.map(b => <option value={b === 'Any Body' ? '' : b}>{b}</option>)}
-          </select>
-        </div>
-
-        <!-- Year -->
-        <div>
-          <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Year</label>
-          <select name="year" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all appearance-none cursor-pointer">
-            {yearRange.map(y => <option value={y === 'Any Year' ? '' : y}>{y}</option>)}
-          </select>
-        </div>
-
-        <!-- Price -->
-        <div>
-          <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Price Range</label>
-          <select name="price" class="w-full bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all appearance-none cursor-pointer">
-            {priceRange.map(p => <option value={p === 'Any Price' ? '' : p}>{p}</option>)}
-          </select>
-        </div>
-
-        <!-- Search Button - Full Width -->
-        <div class="sm:col-span-2 lg:col-span-4">
-          <button type="submit" class="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white py-3.5 rounded-xl font-semibold transition-all hover:shadow-lg hover:shadow-[var(--color-primary)]/25 flex items-center justify-center gap-2 text-sm">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-            Search Vehicles
-          </button>
+      <!-- Filter Form -->
+      <form action="/vehicles" method="get" class="p-6 md:p-8">
+        <input type="hidden" name="condition" id="condition-input" value="" />
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Make</label>
+            <select name="make" class="filter-select w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all">
+              {makes.map(m => <option value={m === 'Any Make' ? '' : m}>{m}</option>)}
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Body Type</label>
+            <select name="body" class="filter-select w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all">
+              {bodyTypes.map(b => <option value={b === 'Any Body' ? '' : b}>{b}</option>)}
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Fuel Type</label>
+            <select name="fuel" class="filter-select w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all">
+              {fuelTypes.map(f => <option value={f === 'Any Fuel' ? '' : f}>{f}</option>)}
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Transmission</label>
+            <select name="transmission" class="filter-select w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all">
+              {transmissions.map(t => <option value={t === 'Any Transmission' ? '' : t}>{t}</option>)}
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Year</label>
+            <select name="year" class="filter-select w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all">
+              {yearRange.map(y => <option value={y === 'Any Year' ? '' : y}>{y}</option>)}
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Price Range</label>
+            <select name="price" class="filter-select w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all">
+              {priceRange.map(p => <option value={p === 'Any Price' ? '' : p}>{p}</option>)}
+            </select>
+          </div>
+          <div class="sm:col-span-2 flex items-end">
+            <button type="submit" class="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white py-3 rounded-lg font-semibold transition-all hover:shadow-lg flex items-center justify-center gap-2 text-sm">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              Find Cars
+            </button>
+          </div>
         </div>
       </form>
     </div>
   </div>
 </section>
+
+<script>
+  const tabs = document.querySelectorAll('#search-tabs .tab-btn');
+  const condInput = document.getElementById('condition-input') as HTMLInputElement;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const val = (tab as HTMLElement).dataset.tab;
+      if (condInput) {
+        condInput.value = val === 'new' ? 'New' : val === 'used' ? 'Used' : '';
+      }
+    });
+  });
+</script>

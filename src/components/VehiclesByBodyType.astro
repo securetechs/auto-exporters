@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import VehicleCard from './VehicleCard.astro';
+
+const allVehicles = await getCollection('vehicles');
+const vehicles = allVehicles.sort((a, b) => b.data.price - a.data.price).slice(0, 6);
+
+// Get unique body types from actual vehicles
+const bodyTypes = ['All', ...new Set(allVehicles.map(v => v.data.bodyType))];
+---
+
+<section class="py-16 lg:py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+      <div>
+        <span class="text-[var(--color-primary)] text-sm font-semibold uppercase tracking-wider">Our Inventory</span>
+        <h2 class="text-3xl font-bold text-gray-900 mt-2 font-[family-name:var(--font-heading)]">Used Cars By Body Type</h2>
+      </div>
+      <a href="/vehicles" class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] font-semibold text-sm flex items-center gap-1 transition-colors">
+        View all
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex flex-wrap gap-2 mb-8" id="body-type-tabs">
+      {bodyTypes.map((type, i) => (
+        <button
+          class={`tab-btn text-sm ${i === 0 ? 'active' : ''}`}
+          data-body-type={type}
+        >
+          {type}
+        </button>
+      ))}
+    </div>
+
+    <!-- Vehicle Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="body-type-grid">
+      {vehicles.map(vehicle => (
+        <div class="vehicle-item" data-body={vehicle.data.bodyType}>
+          <VehicleCard
+            slug={vehicle.data.slug}
+            title={vehicle.data.title}
+            price={vehicle.data.price}
+            mileage={vehicle.data.mileage}
+            fuel={vehicle.data.fuel}
+            transmission={vehicle.data.transmission}
+            bodyType={vehicle.data.bodyType}
+            year={vehicle.data.year}
+            images={vehicle.data.images}
+            featured={vehicle.data.featured}
+            condition={vehicle.data.condition}
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const tabs = document.querySelectorAll('#body-type-tabs .tab-btn');
+  const items = document.querySelectorAll('#body-type-grid .vehicle-item');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const type = (tab as HTMLElement).dataset.bodyType;
+
+      items.forEach(item => {
+        const el = item as HTMLElement;
+        if (type === 'All' || el.dataset.body === type) {
+          el.style.display = '';
+        } else {
+          el.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>

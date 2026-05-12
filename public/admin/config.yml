@@ -24,6 +24,15 @@ collections:
       - { label: "Transmission", name: "transmission", widget: "select", options: ["Automatic", "Manual", "CVT"] }
       - { label: "Body Type", name: "bodyType", widget: "select", options: ["Sedan", "SUV", "Hatchback", "Coupe", "Pickup Truck", "Crossover", "Minivan", "Convertible"] }
       - { label: "Color", name: "color", widget: "string", required: false }
+      - { label: "Condition", name: "condition", widget: "select", options: ["New", "Used"], default: "Used" }
+      - { label: "Doors", name: "doors", widget: "number", value_type: "int", required: false }
+      - { label: "Drive Type", name: "driveType", widget: "select", options: ["FWD", "RWD", "AWD", "4WD"], required: false }
+      - { label: "Engine Size", name: "engineSize", widget: "string", required: false, hint: "e.g. 2.0L, 3.5L V6" }
+      - label: "Features"
+        name: "features"
+        widget: "list"
+        required: false
+        field: { label: "Feature", name: "feature", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
       - label: "Images"
         name: "images"

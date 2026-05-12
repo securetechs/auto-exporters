@@ -1,63 +1,82 @@
 ---
+import { getCollection } from 'astro:content';
+
+const allVehicles = await getCollection('vehicles');
+const featured = allVehicles
+  .filter(v => v.data.featured && v.data.images && v.data.images.length > 0)
+  .sort((a, b) => b.data.price - a.data.price)
+  .slice(0, 4);
 ---
 
-<section class="relative bg-gradient-to-br from-[var(--color-dark)] via-gray-900 to-[var(--color-dark)] overflow-hidden">
-  <!-- Background Pattern -->
-  <div class="absolute inset-0 opacity-5">
-    <div class="absolute top-20 left-10 w-72 h-72 bg-[var(--color-primary)] rounded-full blur-3xl"></div>
-    <div class="absolute bottom-20 right-10 w-96 h-96 bg-[var(--color-primary)] rounded-full blur-3xl"></div>
-  </div>
-
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <!-- Text -->
-      <div>
-        <span class="inline-block bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-sm font-semibold px-4 py-1.5 rounded-full mb-6 border border-[var(--color-primary)]/20">
-          Trusted UK Vehicle Export
-        </span>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight font-[family-name:var(--font-heading)] mb-6">
-          Find Your Next
-          <span class="text-[var(--color-primary)]"> Drive</span>
-          <br />For Export
-        </h1>
-        <p class="text-lg text-gray-400 mb-8 max-w-lg">
-          Quality vehicles from the UK, exported worldwide. Browse our inventory, find the perfect car, and we handle the rest.
-        </p>
-        <div class="flex flex-wrap gap-4">
-          <a href="/vehicles" class="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-8 py-3.5 rounded-full font-semibold transition-all hover:shadow-lg hover:shadow-[var(--color-primary)]/25 text-sm">
-            Browse Vehicles
-          </a>
-          <a href="/contact" class="border border-white/20 hover:border-white/40 text-white px-8 py-3.5 rounded-full font-semibold transition-all text-sm">
-            Get a Quote
-          </a>
-        </div>
-
-        <!-- Stats -->
-        <div class="flex gap-10 mt-12 pt-8 border-t border-white/10">
-          <div>
-            <div class="text-3xl font-bold text-white font-[family-name:var(--font-heading)]">500+</div>
-            <div class="text-sm text-gray-500 mt-1">Vehicles Exported</div>
+<section class="relative bg-[var(--color-dark)] overflow-hidden">
+  <div class="swiper hero-swiper w-full" style="height: 600px;">
+    <div class="swiper-wrapper">
+      {featured.map((vehicle, i) => (
+        <div class="swiper-slide relative">
+          <!-- Background Image -->
+          <div class="absolute inset-0">
+            <img
+              src={vehicle.data.images![0]}
+              alt={vehicle.data.title}
+              class="w-full h-full object-cover"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent"></div>
           </div>
-          <div>
-            <div class="text-3xl font-bold text-white font-[family-name:var(--font-heading)]">50+</div>
-            <div class="text-sm text-gray-500 mt-1">Countries Served</div>
-          </div>
-          <div>
-            <div class="text-3xl font-bold text-white font-[family-name:var(--font-heading)]">98%</div>
-            <div class="text-sm text-gray-500 mt-1">Client Satisfaction</div>
-          </div>
-        </div>
-      </div>
 
-      <!-- Hero Image -->
-      <div class="hidden lg:block relative">
-        <div class="relative rounded-2xl overflow-hidden aspect-[4/3] border border-white/5">
-          <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=800&q=80" alt="Premium vehicle ready for export" class="w-full h-full object-cover" />
-          <!-- Decorative Elements -->
-          <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-[var(--color-primary)]/20 rounded-full blur-2xl"></div>
-          <div class="absolute -top-6 -left-6 w-24 h-24 bg-[var(--color-primary)]/10 rounded-full blur-2xl"></div>
+          <!-- Content Overlay -->
+          <div class="relative h-full flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+              <div class="max-w-xl">
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="bg-[var(--color-primary)] text-white text-xs font-semibold px-3 py-1 rounded">
+                    {vehicle.data.condition || 'Used'}
+                  </span>
+                  <span class="text-white/70 text-sm">
+                    {vehicle.data.mileage.toLocaleString()} mi
+                  </span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-[family-name:var(--font-heading)] leading-tight mb-4">
+                  {vehicle.data.title}
+                </h2>
+                <div class="flex items-center gap-4 mb-6">
+                  <span class="text-2xl font-bold text-[var(--color-primary)] font-[family-name:var(--font-heading)]">
+                    ${vehicle.data.price.toLocaleString()}
+                  </span>
+                  <span class="text-white/50 text-sm">|</span>
+                  <span class="text-white/70 text-sm">{vehicle.data.fuel} &bull; {vehicle.data.transmission}</span>
+                </div>
+                <a
+                  href={`/vehicles/${vehicle.data.slug}`}
+                  class="inline-flex items-center gap-2 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-8 py-3.5 rounded-lg font-semibold transition-all text-sm"
+                >
+                  View Details
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      ))}
     </div>
+    <div class="swiper-pagination !bottom-6"></div>
+    <div class="swiper-button-prev !left-4 !w-11 !h-11"></div>
+    <div class="swiper-button-next !right-4 !w-11 !h-11"></div>
   </div>
 </section>
+
+<script>
+  import Swiper from 'swiper';
+  import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/navigation';
+  import 'swiper/css/pagination';
+
+  new Swiper('.hero-swiper', {
+    modules: [Navigation, Pagination, Autoplay],
+    loop: true,
+    autoplay: { delay: 5000, disableOnInteraction: false },
+    pagination: { el: '.swiper-pagination', clickable: true },
+    navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+    speed: 600,
+  });
+</script>

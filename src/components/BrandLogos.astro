@@ -1,16 +1,60 @@
 ---
-const brands = ['Toyota', 'BMW', 'Mercedes', 'Audi', 'Ford', 'Nissan', 'Land Rover', 'Kia'];
+import { getCollection } from 'astro:content';
+
+const allVehicles = await getCollection('vehicles');
+
+// Auto-generate brand list from actual vehicles
+const makeCounts = new Map<string, number>();
+allVehicles.forEach(v => {
+  const make = v.data.make;
+  makeCounts.set(make, (makeCounts.get(make) || 0) + 1);
+});
+
+const brandData = Array.from(makeCounts.entries())
+  .sort((a, b) => b[1] - a[1])
+  .map(([name, count]) => ({ name, letter: name[0], count }));
+
+const brands = brandData;
 ---
 
-<section class="py-12 bg-white border-y border-gray-100">
+<section class="py-12 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <p class="text-center text-sm text-gray-400 uppercase tracking-wider mb-8 font-medium">Trusted Brands We Export</p>
-    <div class="grid grid-cols-4 lg:grid-cols-8 gap-6 items-center">
-      {brands.map(brand => (
-        <div class="flex items-center justify-center p-4 grayscale hover:grayscale-0 opacity-40 hover:opacity-100 transition-all duration-300 cursor-default">
-          <span class="text-sm font-bold text-gray-600 font-[family-name:var(--font-heading)] tracking-wide">{brand}</span>
-        </div>
-      ))}
+    <div class="swiper brand-swiper">
+      <div class="swiper-wrapper">
+        {brands.map(brand => (
+          <div class="swiper-slide">
+            <a href={`/vehicles?make=${brand.name}`} class="flex flex-col items-center p-6 rounded-xl hover:bg-gray-50 transition-colors group">
+              <div class="w-16 h-16 bg-gray-100 group-hover:bg-[var(--color-primary)]/10 rounded-full flex items-center justify-center mb-3 transition-colors">
+                <span class="text-xl font-bold text-gray-400 group-hover:text-[var(--color-primary)] transition-colors font-[family-name:var(--font-heading)]">
+                  {brand.letter}
+                </span>
+              </div>
+              <span class="text-sm font-semibold text-gray-700 font-[family-name:var(--font-heading)]">{brand.name}</span>
+              <span class="text-xs text-gray-400 mt-0.5">{brand.count} Car{brand.count !== 1 ? 's' : ''}</span>
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  import Swiper from 'swiper';
+  import { Autoplay } from 'swiper/modules';
+  import 'swiper/css';
+
+  new Swiper('.brand-swiper', {
+    modules: [Autoplay],
+    slidesPerView: 3,
+    spaceBetween: 10,
+    loop: true,
+    autoplay: { delay: 3000, disableOnInteraction: false },
+    breakpoints: {
+      640: { slidesPerView: 4 },
+      768: { slidesPerView: 5 },
+      1024: { slidesPerView: 6 },
+      1280: { slidesPerView: 8 },
+    },
+  });
+</script>
