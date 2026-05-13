@@ -40,6 +40,12 @@ h1, h2, h3, h4, h5, h6 {
   width: 24px !important;
   border-radius: 5px !important;
 }
+.body-type-pagination,
+.brand-pagination {
+  position: relative !important;
+  bottom: auto !important;
+  margin-top: 1.5rem !important;
+}
 .swiper-button-next,
 .swiper-button-prev {
   color: #FF7101 !important;
