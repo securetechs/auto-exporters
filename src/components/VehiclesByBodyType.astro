@@ -3,20 +3,17 @@ import { getCollection } from 'astro:content';
 import VehicleCard from './VehicleCard.astro';
 
 const allVehicles = await getCollection('vehicles');
-const vehicles = allVehicles.sort((a, b) => b.data.price - a.data.price).slice(0, 6);
+const vehicles = allVehicles.sort((a, b) => b.data.price - a.data.price).slice(0, 4);
 
 // Get unique body types from actual vehicles
-const bodyTypes = ['All', ...new Set(allVehicles.map(v => v.data.bodyType))];
+const bodyTypes = ['All Cars', ...new Set(allVehicles.map(v => v.data.bodyType))];
 ---
 
 <section class="pt-8 pb-16 lg:pt-10 lg:pb-20 bg-gray-50">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
-      <div>
-        <span class="text-[var(--color-primary)] text-sm font-semibold uppercase tracking-wider">Our Inventory</span>
-        <h2 class="text-3xl font-bold text-gray-900 mt-2 font-[family-name:var(--font-heading)]">Used Cars By Body Type</h2>
-      </div>
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+      <h2 class="text-2xl lg:text-3xl font-bold text-gray-900 font-[family-name:var(--font-heading)]">Used Cars By Body Type</h2>
       <a href="/vehicles" class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)] font-semibold text-sm flex items-center gap-1 transition-colors">
         View all
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -35,8 +32,8 @@ const bodyTypes = ['All', ...new Set(allVehicles.map(v => v.data.bodyType))];
       ))}
     </div>
 
-    <!-- Vehicle Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="body-type-grid">
+    <!-- Vehicle Grid — 2 columns, horizontal cards -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="body-type-grid">
       {vehicles.map(vehicle => (
         <div class="vehicle-item" data-body={vehicle.data.bodyType}>
           <VehicleCard
@@ -51,6 +48,7 @@ const bodyTypes = ['All', ...new Set(allVehicles.map(v => v.data.bodyType))];
             images={vehicle.data.images}
             featured={vehicle.data.featured}
             condition={vehicle.data.condition}
+            layout="horizontal"
           />
         </div>
       ))}
@@ -70,7 +68,7 @@ const bodyTypes = ['All', ...new Set(allVehicles.map(v => v.data.bodyType))];
 
       items.forEach(item => {
         const el = item as HTMLElement;
-        if (type === 'All' || el.dataset.body === type) {
+        if (type === 'All Cars' || el.dataset.body === type) {
           el.style.display = '';
         } else {
           el.style.display = 'none';
