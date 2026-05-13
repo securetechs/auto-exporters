@@ -39,16 +39,16 @@ allVehicles.forEach(v => {
     <!-- Header with tabs -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-10">
       <h2 class="text-2xl lg:text-3xl font-bold text-gray-900 font-[family-name:var(--font-heading)]">Popular Car Makes & Body Types</h2>
-      <div class="flex items-center gap-6 mt-4 sm:mt-0">
-        <button class="brand-tab active text-sm font-medium text-gray-800 transition-all flex items-center gap-1" data-tab="car-makes">
+      <div class="flex items-center gap-10 mt-4 sm:mt-0">
+        <button class="brand-tab active text-base font-medium text-gray-800 hover:text-[var(--color-primary)] transition-all flex items-center gap-1.5" data-tab="car-makes">
           Car makes
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
-        <button class="brand-tab text-sm font-medium text-[var(--color-primary)] transition-all flex items-center gap-1" data-tab="body-types">
+        <button class="brand-tab text-base font-medium text-[var(--color-primary)] hover:text-[var(--color-primary)] transition-all flex items-center gap-1.5" data-tab="body-types">
           Car body types
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </button>
-        <a href="/vehicles" class="text-sm font-medium text-gray-400 hover:text-[var(--color-primary)] transition-colors">View all →</a>
+        <a href="/vehicles" class="text-base font-medium text-gray-400 hover:text-[var(--color-primary)] transition-colors">View all →</a>
       </div>
     </div>
 
@@ -140,10 +140,10 @@ allVehicles.forEach(v => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => {
         t.classList.remove('text-[var(--color-primary)]');
-        t.classList.add('text-gray-800');
+        t.classList.add('text-gray-600');
       });
       tab.classList.add('text-[var(--color-primary)]');
-      tab.classList.remove('text-gray-800');
+      tab.classList.remove('text-gray-600');
 
       panels.forEach(p => p.classList.add('hidden'));
       const target = tab.dataset.tab;
