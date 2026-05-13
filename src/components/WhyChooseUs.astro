@@ -25,14 +25,16 @@ const benefits = [
 
 <section class="py-16 lg:py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
+    <div class="grid lg:grid-cols-2 gap-12 items-start">
       <!-- Left: Mountain BG + sliding car -->
-      <div class="relative rounded-2xl overflow-hidden aspect-[3/4]">
+      <div class="relative rounded-2xl aspect-[3/4]">
         <!-- Mountain background -->
-        <img src="/assets/images/section/wcu-bg.webp" alt="Mountain landscape" class="w-full h-full object-cover absolute inset-0" loading="lazy" />
+        <div class="w-full h-full rounded-2xl overflow-hidden">
+          <img src="/assets/images/section/wcu-bg.webp" alt="Mountain landscape" class="w-full h-full object-cover" loading="lazy" />
+        </div>
 
-        <!-- Slowly sliding car -->
-        <div class="absolute bottom-0 left-0 right-0 wcu-car-wrapper">
+        <!-- Slowly sliding car — extends outside the image -->
+        <div class="absolute -bottom-[8%] left-0 right-0 wcu-car-wrapper">
           <img src="/assets/images/section/wcu-car.webp" alt="Car" class="w-[85%] max-w-[420px] object-contain wcu-car" loading="lazy" />
         </div>
 
@@ -60,7 +62,7 @@ const benefits = [
       </div>
 
       <!-- Right: Benefits -->
-      <div class="pl-4">
+      <div class="pl-4 pt-2">
         <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 font-[family-name:var(--font-heading)]">Why Choose Auto Deal</h2>
         <p class="text-gray-500 text-sm mb-8 max-w-md">Our experienced team excels in car sales with many years of successfully navigating the market, delivering informed decisions and optimal results.</p>
 
