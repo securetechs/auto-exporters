@@ -19,7 +19,7 @@ const transmissions = ['Transmission', 'Automatic', 'Manual', 'CVT'];
 
 <section class="relative bg-[var(--color-dark)] overflow-hidden">
   <!-- Background Carousel -->
-  <div class="swiper hero-swiper w-full" style="height: 85vh; min-height: 650px; max-height: 850px;">
+  <div class="swiper hero-swiper w-full" style="height: 75vh; min-height: 580px; max-height: 720px;">
     <div class="swiper-wrapper">
       {featured.map(vehicle => (
         <div class="swiper-slide relative">
@@ -42,12 +42,12 @@ const transmissions = ['Transmission', 'Automatic', 'Manual', 'CVT'];
   <div class="absolute inset-0 z-10 flex flex-col justify-center">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <!-- Heading -->
-      <div class="mb-12">
-        <p class="text-[var(--color-primary)] text-sm font-medium mb-3">Over {totalVehicles.toLocaleString()} classified ads listing</p>
+      <div class="mb-6">
+        <p class="text-[var(--color-primary)] text-sm font-medium mb-2">Over {totalVehicles.toLocaleString()} classified ads listing</p>
         <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white font-[family-name:var(--font-heading)] leading-tight hero-heading">
           Find what are you<br />looking for
         </h1>
-        <p class="text-white/50 text-sm mt-4 max-w-lg">
+        <p class="text-white/50 text-sm mt-2 max-w-lg">
           Explore the worlds largest database to buy, sell, trade or simply rent a car
         </p>
       </div>
