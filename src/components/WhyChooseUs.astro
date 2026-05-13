@@ -25,7 +25,7 @@ const benefits = [
 
 <section class="py-16 lg:py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-[2fr_3fr] gap-4 items-start">
+    <div class="grid lg:grid-cols-[5fr_7fr] gap-8 items-start">
       <!-- Left: Mountain BG + sliding car -->
       <div class="relative rounded-2xl aspect-[3/4]">
         <!-- Mountain background -->
@@ -33,13 +33,13 @@ const benefits = [
           <img src="/assets/images/section/wcu-bg.webp" alt="Mountain landscape" class="w-full h-full object-cover" loading="lazy" />
         </div>
 
-        <!-- Slowly sliding car — extends outside the image -->
-        <div class="absolute -bottom-[3%] left-0 right-0 wcu-car-wrapper">
-          <img src="/assets/images/section/wcu-car.webp" alt="Car" class="w-[65%] max-w-[300px] object-contain wcu-car" loading="lazy" />
+        <!-- Slowly sliding car — slightly extends outside -->
+        <div class="absolute -bottom-[2%] left-[10%] right-0 wcu-car-wrapper flex justify-center">
+          <img src="/assets/images/section/wcu-car.webp" alt="Car" class="w-[80%] max-w-[340px] object-contain wcu-car" loading="lazy" />
         </div>
 
-        <!-- Floating stat badges -->
-        <div class="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-10">
+        <!-- Floating stat badges — extend beyond image right edge -->
+        <div class="absolute right-[-30px] top-[30%] flex flex-col gap-3 z-10">
           <div class="bg-white rounded-xl shadow-lg px-5 py-3 flex items-center gap-3">
             <div class="w-9 h-9 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
               <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
