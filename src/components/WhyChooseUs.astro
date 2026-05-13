@@ -26,11 +26,17 @@ const benefits = [
 <section class="py-16 lg:py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <!-- Left: Image with floating stat badges -->
-      <div class="relative">
-        <img src="/assets/images/section/wcu-1.webp" alt="Why Choose AutoDeal" class="w-full rounded-2xl object-cover" style="min-height: 480px;" loading="lazy" />
+      <!-- Left: Mountain BG + sliding car -->
+      <div class="relative rounded-2xl overflow-hidden" style="min-height: 500px;">
+        <!-- Mountain background -->
+        <img src="/assets/images/section/wcu-bg.webp" alt="Mountain landscape" class="w-full h-full object-cover absolute inset-0" loading="lazy" />
 
-        <!-- Floating stat badges — positioned on the right edge, overlapping into gap -->
+        <!-- Slowly sliding car -->
+        <div class="absolute bottom-0 left-0 right-0 wcu-car-wrapper">
+          <img src="/assets/images/section/wcu-car.webp" alt="Car" class="w-[85%] max-w-[420px] object-contain wcu-car" loading="lazy" />
+        </div>
+
+        <!-- Floating stat badges -->
         <div class="absolute right-[-20px] top-1/2 -translate-y-1/2 flex flex-col gap-3 z-10">
           <div class="bg-white rounded-xl shadow-lg px-5 py-3 flex items-center gap-3">
             <div class="w-9 h-9 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
@@ -77,3 +83,14 @@ const benefits = [
     </div>
   </div>
 </section>
+
+<style>
+  @keyframes wcuCarSlide {
+    0% { transform: translateX(-10%); }
+    50% { transform: translateX(5%); }
+    100% { transform: translateX(-10%); }
+  }
+  .wcu-car {
+    animation: wcuCarSlide 12s ease-in-out infinite;
+  }
+</style>
