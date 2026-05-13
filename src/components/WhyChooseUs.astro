@@ -7,17 +7,17 @@ const benefits = [
   },
   {
     title: 'Pre-Owned vehicles',
-    description: 'AutoDealer has a great selection of pre-owned vehicles.',
+    description: 'AutoDeal has a great selection of pre-owned vehicles.',
     icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4',
   },
   {
     title: 'Certified pre-owned vehicles',
-    description: 'Inspected and certified to meet the highest standards for your peace of mind.',
+    description: 'AutoDeal has a great selection of certified pre-owned vehicles.',
     icon: 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z',
   },
   {
     title: 'Financing',
-    description: 'Flexible finance options with quick approval and competitive interest rates.',
+    description: 'Get approved today and drive off in a new or used vehicle.',
     icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
   },
 ];
@@ -25,13 +25,13 @@ const benefits = [
 
 <section class="py-16 lg:py-20 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="grid lg:grid-cols-2 gap-10 items-center">
-      <!-- Left: Image with overlaid stat badges -->
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Left: Image with floating stat badges -->
       <div class="relative">
-        <img src="/assets/images/section/wcu-1.webp" alt="Why Choose AutoDeal" class="w-full rounded-2xl object-cover aspect-[4/5]" loading="lazy" />
+        <img src="/assets/images/section/wcu-1.webp" alt="Why Choose AutoDeal" class="w-full rounded-2xl object-cover" style="min-height: 480px;" loading="lazy" />
 
-        <!-- Overlaid stat badges -->
-        <div class="absolute left-4 top-1/2 -translate-y-1/2 flex flex-col gap-3">
+        <!-- Floating stat badges — positioned on the right edge, overlapping into gap -->
+        <div class="absolute right-[-20px] top-1/2 -translate-y-1/2 flex flex-col gap-3 z-10">
           <div class="bg-white rounded-xl shadow-lg px-5 py-3 flex items-center gap-3">
             <div class="w-9 h-9 bg-emerald-100 rounded-full flex items-center justify-center shrink-0">
               <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
@@ -54,9 +54,9 @@ const benefits = [
       </div>
 
       <!-- Right: Benefits -->
-      <div>
+      <div class="pl-4">
         <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 font-[family-name:var(--font-heading)]">Why Choose Auto Deal</h2>
-        <p class="text-gray-500 text-sm mb-8 max-w-md">Our experience and expertise in car deals with many years of successfully navigating the market, delivering informed decisions and optimal results.</p>
+        <p class="text-gray-500 text-sm mb-8 max-w-md">Our experienced team excels in car sales with many years of successfully navigating the market, delivering informed decisions and optimal results.</p>
 
         <div class="space-y-6">
           {benefits.map(benefit => (
