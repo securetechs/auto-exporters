@@ -7,29 +7,25 @@ const { defaultPrice = 30000 } = Astro.props;
 ---
 
 <section
-  class="relative bg-fixed bg-cover bg-center min-h-[600px] lg:min-h-[650px]"
+  class="relative min-h-[600px] lg:min-h-[650px] overflow-hidden bg-black"
   id="loan-calculator"
-  style="background-image: url('/assets/images/section/bg-3.jpg');"
 >
+  <!-- Parallax background image -->
+  <div class="absolute left-0 right-0" style="top: -300px; bottom: -300px;">
+    <img
+      src="/assets/images/section/loan-bg.jpg"
+      alt=""
+      class="w-full h-full object-cover parallax-img"
+    />
+  </div>
   <!-- Dark overlay -->
-  <div class="absolute inset-0 bg-black/50"></div>
+  <div class="absolute inset-0 bg-black/40"></div>
 
   <!-- Content -->
-  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
-    <div class="grid lg:grid-cols-2 gap-10 items-center">
-      <!-- Left: Section Heading -->
-      <div>
-        <span class="text-[var(--color-primary)] text-sm font-semibold uppercase tracking-wider">Financial Tools</span>
-        <h2 class="text-3xl sm:text-4xl font-bold text-white mt-3 font-[family-name:var(--font-heading)] leading-tight">
-          Auto Loan Calculator
-        </h2>
-        <p class="text-white/70 text-base mt-4 max-w-md leading-relaxed">
-          Use our calculator to estimate your monthly car payments and plan your next vehicle purchase with confidence.
-        </p>
-      </div>
-
-      <!-- Right: Floating Calculator Card -->
-      <div class="bg-white rounded-2xl shadow-2xl p-8 lg:p-10">
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20 lg:pl-4">
+    <div class="flex justify-start">
+      <!-- Calculator Card -->
+      <div class="bg-white rounded-2xl p-8 lg:p-10 w-full max-w-lg floating-card" style="box-shadow: 0 25px 60px rgba(0,0,0,0.3);">
         <div class="space-y-5">
           <div>
             <label class="block text-sm font-medium text-gray-700 mb-1.5">Total Price</label>
@@ -107,4 +103,28 @@ const { defaultPrice = 30000 } = Astro.props;
     document.getElementById(id)?.addEventListener('change', calculate);
   });
   calculate();
+
+  // Floating card animation
+  const card = document.querySelector('.floating-card') as HTMLElement;
+  if (card) {
+    window.addEventListener('scroll', () => {
+      const rect = card.getBoundingClientRect();
+      const windowH = window.innerHeight;
+      const visible = Math.max(0, Math.min(1, (windowH - rect.top) / (windowH + rect.height)));
+      const float = Math.sin(visible * Math.PI) * 8;
+      card.style.transform = `translateY(${-float}px)`;
+    }, { passive: true });
+  }
+
+  // Parallax scroll effect
+  const section = document.getElementById('loan-calculator');
+  const parallaxImg = section?.querySelector('.parallax-img') as HTMLElement;
+  if (section && parallaxImg) {
+    window.addEventListener('scroll', () => {
+      const rect = section.getBoundingClientRect();
+      const speed = 0.5;
+      const offset = rect.top * speed;
+      parallaxImg.style.transform = `translateY(${offset}px)`;
+    }, { passive: true });
+  }
 </script>
