@@ -5,7 +5,7 @@ description: "Learn how to verify a UK vehicle's MOT history, mileage, ownership
 date: 2026-05-10
 author: "AutoDeal Team"
 category: "Tips & Advice"
-image: ""
+image: "/images/vehicles/merc-g-wagon/hi4a9938.webp"
 draft: false
 ---
 

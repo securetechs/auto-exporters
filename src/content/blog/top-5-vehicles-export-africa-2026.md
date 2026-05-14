@@ -5,7 +5,7 @@ description: "Discover the most popular UK vehicles being exported to Africa thi
 date: 2026-05-05
 author: "AutoDeal Team"
 category: "Vehicle Reviews"
-image: ""
+image: "/images/vehicles/porsche/gt3rs-01.webp"
 draft: false
 ---
 

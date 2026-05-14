@@ -15,6 +15,9 @@ const doors = ['Door', '2', '3', '4', '5'];
 const models = ['Model', 'All Models'];
 const fuelTypes = ['Fuel Type', 'Petrol', 'Diesel', 'Electric', 'Hybrid'];
 const transmissions = ['Transmission', 'Automatic', 'Manual', 'CVT'];
+const driveTypes = ['Drive Type', 'AWD', 'FWD', 'RWD', '4WD'];
+const cylinders = ['Cylinders', '3', '4', '6', '8', '10', '12'];
+const colors = ['Color', 'Black', 'White', 'Silver', 'Gray', 'Blue', 'Red', 'Green', 'Gold'];
 ---
 
 <section class="relative bg-[var(--color-dark)] overflow-hidden">
@@ -63,6 +66,7 @@ const transmissions = ['Transmission', 'Automatic', 'Manual', 'CVT'];
       <div class="bg-white rounded-xl shadow-xl overflow-hidden">
         <form action="/vehicles" method="get" class="p-4">
           <input type="hidden" name="condition" id="hero-condition" value="" />
+          <!-- Basic filter row -->
           <div class="flex flex-wrap lg:flex-nowrap gap-3 items-center">
             <select name="make" class="filter-select flex-1 min-w-[130px] bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer">
               {makes.map(m => <option value={m === 'Make' ? '' : m}>{m}</option>)}
@@ -76,14 +80,45 @@ const transmissions = ['Transmission', 'Automatic', 'Manual', 'CVT'];
             <select name="body" class="filter-select flex-1 min-w-[110px] bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer">
               {bodyTypes.map(b => <option value={b === 'Body Type' ? '' : b}>{b}</option>)}
             </select>
-            <!-- Filter icon -->
-            <button type="button" class="shrink-0 w-11 h-11 flex items-center justify-center rounded-xl border border-gray-200 text-gray-400 hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+            <!-- Advanced filter toggle -->
+            <button
+              type="button"
+              id="advanced-filter-toggle"
+              aria-expanded="false"
+              aria-controls="advanced-filter-panel"
+              class="shrink-0 w-11 h-11 flex items-center justify-center rounded-xl border border-gray-200 text-gray-400 hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] transition-colors"
+              title="Advanced filters"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
             </button>
             <button type="submit" class="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-7 py-3 rounded-xl font-semibold transition-all flex items-center gap-2 text-sm whitespace-nowrap shrink-0">
               Find cars
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
             </button>
+          </div>
+
+          <!-- Advanced filter panel — hidden until funnel toggle -->
+          <div id="advanced-filter-panel" class="hidden mt-4 pt-4 border-t border-gray-100">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              <select name="fuel" class="filter-select w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer">
+                {fuelTypes.map(f => <option value={f === 'Fuel Type' ? '' : f}>{f}</option>)}
+              </select>
+              <select name="transmission" class="filter-select w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer">
+                {transmissions.map(t => <option value={t === 'Transmission' ? '' : t}>{t}</option>)}
+              </select>
+              <select name="driveType" class="filter-select w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer">
+                {driveTypes.map(d => <option value={d === 'Drive Type' ? '' : d}>{d}</option>)}
+              </select>
+              <select name="cylinders" class="filter-select w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer">
+                {cylinders.map(c => <option value={c === 'Cylinders' ? '' : c}>{c}</option>)}
+              </select>
+              <select name="color" class="filter-select w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer">
+                {colors.map(c => <option value={c === 'Color' ? '' : c}>{c}</option>)}
+              </select>
+              <input type="number" name="minPrice" placeholder="Min Price ($)" min="0" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-[var(--color-primary)] transition-colors" />
+              <input type="number" name="maxPrice" placeholder="Max Price ($)" min="0" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-[var(--color-primary)] transition-colors" />
+              <input type="number" name="year" placeholder="Year" min="1990" max="2030" class="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-[var(--color-primary)] transition-colors" />
+            </div>
           </div>
         </form>
       </div>
@@ -94,7 +129,7 @@ const transmissions = ['Transmission', 'Automatic', 'Manual', 'CVT'];
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M6 17H4v-2l2-4h2l2-3h4l2 3h2l2 4v2h-2"/></svg>
           Coupe
         </a>
-        <a href="/vehicles?bodyType=SUV" class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
+        <a href="/vehicles?bodyType=Minivan" class="inline-flex items-center gap-2 text-sm text-white/60 hover:text-white transition-colors">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 17h8M6 17H4v-2l2-4h2l2-3h4l2 3h2l2 4v2h-2"/></svg>
           MVP
         </a>
@@ -161,5 +196,17 @@ const transmissions = ['Transmission', 'Automatic', 'Manual', 'CVT'];
         condInput.value = val === 'new' ? 'New' : val === 'used' ? 'Used' : '';
       }
     });
+  });
+
+  // Advanced filter panel toggle
+  const advToggle = document.getElementById('advanced-filter-toggle');
+  const advPanel = document.getElementById('advanced-filter-panel');
+
+  advToggle?.addEventListener('click', () => {
+    const isHidden = advPanel?.classList.contains('hidden');
+    advPanel?.classList.toggle('hidden');
+    advToggle.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+    advToggle.classList.toggle('text-[var(--color-primary)]', isHidden);
+    advToggle.classList.toggle('border-[var(--color-primary)]', isHidden);
   });
 </script>

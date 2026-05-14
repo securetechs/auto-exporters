@@ -5,7 +5,7 @@ description: "A transparent breakdown of vehicle shipping costs from the UK, inc
 date: 2026-04-15
 author: "AutoDeal Team"
 category: "Tips & Advice"
-image: ""
+image: "/images/vehicles/mclaren/hi4a3266.webp"
 draft: false
 ---
 

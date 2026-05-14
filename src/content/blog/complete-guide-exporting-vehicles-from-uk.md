@@ -5,7 +5,7 @@ description: "Everything you need to know about exporting a vehicle from the Uni
 date: 2026-04-28
 author: "AutoDeal Team"
 category: "Export Guide"
-image: ""
+image: "/images/vehicles/rolls-royce/cullinan-02.webp"
 draft: false
 ---
 

@@ -6,69 +6,74 @@ interface Props {
 const { defaultPrice = 30000 } = Astro.props;
 ---
 
-<section class="py-16 lg:py-20 bg-gray-50" id="loan-calculator">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10">
-      <span class="text-[var(--color-primary)] text-sm font-semibold uppercase tracking-wider">Financial Tools</span>
-      <h2 class="text-3xl font-bold text-gray-900 mt-2 font-[family-name:var(--font-heading)]">Auto Loan Calculator</h2>
-      <p class="text-gray-500 text-sm mt-2 max-w-md mx-auto">Use our calculator to estimate your monthly car payments.</p>
-    </div>
+<section
+  class="relative bg-fixed bg-cover bg-center min-h-[600px] lg:min-h-[650px]"
+  id="loan-calculator"
+  style="background-image: url('/assets/images/section/bg-3.jpg');"
+>
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-black/50"></div>
 
-    <div class="max-w-5xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-0 rounded-2xl overflow-hidden shadow-sm border border-gray-100">
-        <!-- Left: Form -->
-        <div class="bg-white p-8 lg:p-10">
-          <div class="space-y-5">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1.5">Total Price</label>
-              <input type="number" id="calc-price" value={defaultPrice} min="0" class="w-full border-b border-gray-200 px-0 py-3 text-base text-gray-900 outline-none focus:border-[var(--color-primary)] transition-colors bg-transparent" />
-            </div>
-            <div class="grid grid-cols-2 gap-6">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1.5">Down payment</label>
-                <input type="number" id="calc-down" value="5000" min="0" class="w-full border-b border-gray-200 px-0 py-3 text-base text-gray-900 outline-none focus:border-[var(--color-primary)] transition-colors bg-transparent" />
-              </div>
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1.5">Amortization Period (months)</label>
-                <select id="calc-term" class="filter-select w-full border-b border-gray-200 px-0 py-3 text-base text-gray-900 outline-none focus:border-[var(--color-primary)] transition-colors bg-transparent">
-                  <option value="" disabled>Select Amortization Period</option>
-                  <option value="6">6 Months</option>
-                  <option value="12">12 Months</option>
-                  <option value="24">24 Months</option>
-                  <option value="36" selected>36 Months</option>
-                  <option value="48">48 Months</option>
-                  <option value="60">60 Months</option>
-                  <option value="72">72 Months</option>
-                </select>
-              </div>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1.5">Interest rate</label>
-              <input type="number" id="calc-rate" value="5" min="0" max="30" step="0.1" class="w-full border-b border-gray-200 px-0 py-3 text-base text-gray-900 outline-none focus:border-[var(--color-primary)] transition-colors bg-transparent" />
-            </div>
+  <!-- Content -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <!-- Left: Section Heading -->
+      <div>
+        <span class="text-[var(--color-primary)] text-sm font-semibold uppercase tracking-wider">Financial Tools</span>
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mt-3 font-[family-name:var(--font-heading)] leading-tight">
+          Auto Loan Calculator
+        </h2>
+        <p class="text-white/70 text-base mt-4 max-w-md leading-relaxed">
+          Use our calculator to estimate your monthly car payments and plan your next vehicle purchase with confidence.
+        </p>
+      </div>
 
-            <!-- Results -->
-            <div class="pt-4 space-y-3">
-              <div class="flex justify-between items-center">
-                <span class="text-sm text-gray-500">Down payment amount</span>
-                <span class="font-semibold text-gray-900" id="result-down">$5,000</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <span class="text-sm font-semibold text-[var(--color-primary)]">Monthly payment</span>
-                <span class="text-xl font-bold text-[var(--color-primary)] font-[family-name:var(--font-heading)]" id="result-monthly">$755</span>
-              </div>
-            </div>
-
-            <button id="calc-btn" type="button" class="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white py-3.5 rounded-lg font-semibold transition-all text-sm mt-2">
-              Apply for a loan
-            </button>
+      <!-- Right: Floating Calculator Card -->
+      <div class="bg-white rounded-2xl shadow-2xl p-8 lg:p-10">
+        <div class="space-y-5">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Total Price</label>
+            <input type="number" id="calc-price" value={defaultPrice} min="0" class="w-full border-b border-gray-200 px-0 py-3 text-base text-gray-900 outline-none focus:border-[var(--color-primary)] transition-colors bg-transparent" />
           </div>
-        </div>
+          <div class="grid grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Down payment</label>
+              <input type="number" id="calc-down" value="5000" min="0" class="w-full border-b border-gray-200 px-0 py-3 text-base text-gray-900 outline-none focus:border-[var(--color-primary)] transition-colors bg-transparent" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1.5">Amortization Period</label>
+              <select id="calc-term" class="filter-select w-full border-b border-gray-200 px-0 py-3 text-base text-gray-900 outline-none focus:border-[var(--color-primary)] transition-colors bg-transparent">
+                <option value="" disabled>Select Period</option>
+                <option value="6">6 Months</option>
+                <option value="12">12 Months</option>
+                <option value="24">24 Months</option>
+                <option value="36" selected>36 Months</option>
+                <option value="48">48 Months</option>
+                <option value="60">60 Months</option>
+                <option value="72">72 Months</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1.5">Interest rate</label>
+            <input type="number" id="calc-rate" value="5" min="0" max="30" step="0.1" class="w-full border-b border-gray-200 px-0 py-3 text-base text-gray-900 outline-none focus:border-[var(--color-primary)] transition-colors bg-transparent" />
+          </div>
 
-        <!-- Right: Image -->
-        <div class="hidden md:block relative bg-gray-200">
-          <img src="/assets/images/section/bg-5.jpg" alt="Auto Loan" class="w-full h-full object-cover" loading="lazy" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+          <!-- Results -->
+          <div class="pt-4 space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-sm text-gray-500">Down payment amount</span>
+              <span class="font-semibold text-gray-900" id="result-down">$5,000</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-semibold text-[var(--color-primary)]">Monthly payment</span>
+              <span class="text-xl font-bold text-[var(--color-primary)] font-[family-name:var(--font-heading)]" id="result-monthly">$755</span>
+            </div>
+          </div>
+
+          <button id="calc-btn" type="button" class="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white py-3.5 rounded-lg font-semibold transition-all text-sm mt-2">
+            Apply for a loan
+          </button>
         </div>
       </div>
     </div>
