@@ -31,17 +31,19 @@ const related = allPosts
 
 <Layout title={`${title} - AutoDeal Blog`} description={description}>
   <!-- Breadcrumb -->
-  <div class="bg-gray-50 border-b border-gray-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
-      <nav class="flex items-center gap-2 text-sm text-gray-500">
+  <section class="bg-gradient-to-br from-[var(--color-dark)] to-gray-900 py-12 lg:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="breadcrumb flex items-center gap-2 text-sm text-gray-400 mb-4">
         <a href="/" class="hover:text-[var(--color-primary)] transition-colors">Home</a>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         <a href="/blog" class="hover:text-[var(--color-primary)] transition-colors">Blog</a>
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <span class="text-gray-900 font-medium truncate">{title}</span>
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span class="text-white truncate">{title}</span>
       </nav>
+      <h1 class="text-3xl lg:text-4xl font-bold text-white font-[family-name:var(--font-heading)] leading-tight">{title}</h1>
+      <p class="text-gray-400 mt-2 max-w-xl">{description}</p>
     </div>
-  </div>
+  </section>
 
   <article class="py-8 lg:py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -51,14 +53,10 @@ const related = allPosts
         <div>
           <!-- Post Header -->
           <header class="mb-8">
-            <div class="flex items-center gap-3 mb-4">
+            <div class="flex items-center gap-4 text-sm text-gray-500 pb-6 border-b border-gray-200">
               <a href={`/blog?category=${encodeURIComponent(category)}`} class="bg-[var(--color-primary)]/10 text-[var(--color-primary)] text-xs font-semibold px-3 py-1 rounded-full hover:bg-[var(--color-primary)]/20 transition-colors">
                 {category}
               </a>
-            </div>
-            <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 font-[family-name:var(--font-heading)] leading-tight mb-4">{title}</h1>
-            <p class="text-lg text-gray-500 mb-6">{description}</p>
-            <div class="flex items-center gap-4 text-sm text-gray-400 pb-6 border-b border-gray-200">
               <span class="flex items-center gap-1.5">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                 {author}

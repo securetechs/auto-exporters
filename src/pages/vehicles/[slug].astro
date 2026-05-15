@@ -115,7 +115,6 @@ const hasImages = images && images.length > 0;
               {features && features.length > 0 && (
                 <button class="tab-btn whitespace-nowrap" data-target="features-section">Features</button>
               )}
-              <button class="tab-btn whitespace-nowrap" data-target="calculator-section">Calculator</button>
             </div>
           </div>
 
@@ -161,56 +160,6 @@ const hasImages = images && images.length > 0;
             </div>
           )}
 
-          <!-- Embedded Loan Calculator -->
-          <div id="calculator-section" class="mb-8">
-            <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden">
-              <div class="p-6 border-b border-gray-100">
-                <h2 class="text-lg font-semibold text-gray-900 font-[family-name:var(--font-heading)]">Loan Calculator</h2>
-              </div>
-              <div class="grid lg:grid-cols-2">
-                <div class="p-6 space-y-4">
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Vehicle Price ($)</label>
-                    <input type="number" id="detail-calc-price" value={price} class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:border-[var(--color-primary)] outline-none" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Down Payment ($)</label>
-                    <input type="number" id="detail-calc-down" value={Math.round(price * 0.2)} class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:border-[var(--color-primary)] outline-none" />
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Term (months)</label>
-                    <select id="detail-calc-term" class="filter-select w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm outline-none">
-                      <option value="24">24 Months</option>
-                      <option value="36" selected>36 Months</option>
-                      <option value="48">48 Months</option>
-                      <option value="60">60 Months</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Interest Rate (%)</label>
-                    <input type="number" id="detail-calc-rate" value="5.5" step="0.1" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm focus:border-[var(--color-primary)] outline-none" />
-                  </div>
-                  <button id="detail-calc-btn" class="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white py-2.5 rounded-lg font-semibold text-sm transition-all">Calculate</button>
-                </div>
-                <div class="bg-[var(--color-dark)] p-6 flex flex-col justify-center">
-                  <div class="space-y-3">
-                    <div class="flex justify-between pb-3 border-b border-white/10">
-                      <span class="text-gray-400 text-sm">Financed</span>
-                      <span class="text-white font-semibold" id="detail-result-financed">-</span>
-                    </div>
-                    <div class="flex justify-between pb-3 border-b border-white/10">
-                      <span class="text-gray-400 text-sm">Total Interest</span>
-                      <span class="text-white font-semibold" id="detail-result-interest">-</span>
-                    </div>
-                    <div class="flex justify-between pt-2">
-                      <span class="text-white font-semibold">Monthly</span>
-                      <span class="text-2xl font-bold text-[var(--color-primary)]" id="detail-result-monthly">-</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- Right Sidebar -->
@@ -354,26 +303,4 @@ const hasImages = images && images.length > 0;
     });
   });
 
-  // Detail page calculator
-  function detailCalc() {
-    const price = parseFloat((document.getElementById('detail-calc-price') as HTMLInputElement).value) || 0;
-    const down = parseFloat((document.getElementById('detail-calc-down') as HTMLInputElement).value) || 0;
-    const term = parseInt((document.getElementById('detail-calc-term') as HTMLSelectElement).value) || 36;
-    const rate = parseFloat((document.getElementById('detail-calc-rate') as HTMLInputElement).value) || 0;
-    const financed = Math.max(0, price - down);
-    const mr = rate / 100 / 12;
-    let monthly = 0, interest = 0;
-    if (mr > 0 && term > 0) {
-      monthly = financed * (mr * Math.pow(1 + mr, term)) / (Math.pow(1 + mr, term) - 1);
-      interest = (monthly * term) - financed;
-    } else if (term > 0) {
-      monthly = financed / term;
-    }
-    const fmt = (n: number) => '$' + Math.round(n).toLocaleString();
-    document.getElementById('detail-result-financed')!.textContent = fmt(financed);
-    document.getElementById('detail-result-interest')!.textContent = fmt(interest);
-    document.getElementById('detail-result-monthly')!.textContent = fmt(monthly);
-  }
-  document.getElementById('detail-calc-btn')?.addEventListener('click', detailCalc);
-  detailCalc();
 </script>

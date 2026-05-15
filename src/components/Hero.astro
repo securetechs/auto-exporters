@@ -20,20 +20,18 @@ const cylinders = ['Cylinders', '3', '4', '6', '8', '10', '12'];
 const colors = ['Color', 'Black', 'White', 'Silver', 'Gray', 'Blue', 'Red', 'Green', 'Gold'];
 ---
 
-<section class="relative bg-[var(--color-dark)] overflow-hidden">
+<section class="relative bg-[var(--color-dark)] overflow-hidden" style="height: 100vh; min-height: 800px;">
   <!-- Background Carousel -->
-  <div class="swiper hero-swiper w-full" style="height: 100vh; min-height: 800px;">
+  <div class="swiper hero-swiper absolute inset-0">
     <div class="swiper-wrapper">
       {featured.map(vehicle => (
-        <div class="swiper-slide relative">
-          <div class="absolute inset-0">
-            <img
-              src={vehicle.data.images![0]}
-              alt={vehicle.data.title}
-              class="w-full h-full object-cover"
-            />
-            <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/30"></div>
-          </div>
+        <div class="swiper-slide">
+          <img
+            src={vehicle.data.images![0]}
+            alt={vehicle.data.title}
+            class="absolute inset-0 w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/30"></div>
         </div>
       ))}
     </div>
