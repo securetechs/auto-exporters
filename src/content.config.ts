@@ -9,6 +9,7 @@ const countries = defineCollection({
     description: z.string(),
     heroImage: z.string().optional(),
     region: z.string(),
+    parentSlug: z.string().optional(),
     shippingTime: z.string(),
     popularBrands: z.array(z.string()),
     popularModels: z.array(z.string()),

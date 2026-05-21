@@ -2,7 +2,9 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-const countries = await getCollection('countries');
+const allCountries = await getCollection('countries');
+// Only show top-level regions on the index page
+const countries = allCountries.filter(c => !c.data.parentSlug);
 ---
 
 <Layout title="Export Destinations - AutoDeal">

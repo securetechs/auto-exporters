@@ -20,30 +20,22 @@ const cylinders = ['Cylinders', '3', '4', '6', '8', '10', '12'];
 const colors = ['Color', 'Black', 'White', 'Silver', 'Gray', 'Blue', 'Red', 'Green', 'Gold'];
 ---
 
-<section class="relative bg-[var(--color-dark)] overflow-hidden" style="height: 100vh; min-height: 800px;">
-  <!-- Background Carousel -->
-  <div class="swiper hero-swiper absolute inset-0">
-    <div class="swiper-wrapper">
-      {featured.map(vehicle => (
-        <div class="swiper-slide">
-          <img
-            src={vehicle.data.images![0]}
-            alt={vehicle.data.title}
-            class="absolute inset-0 w-full h-full object-cover"
-          />
-          <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/30"></div>
-        </div>
-      ))}
-    </div>
-    <div class="swiper-button-prev hero-prev !left-4 !w-10 !h-10 after:!text-base"></div>
-    <div class="swiper-button-next hero-next !right-4 !w-10 !h-10 after:!text-base"></div>
+<section class="relative bg-[var(--color-dark)] overflow-hidden" style="height: 70vh; min-height: 550px; max-height: 700px;">
+  <!-- Static Background Image -->
+  <div class="absolute inset-0">
+    <img
+      src="/images/vehicles/porsche/gt3rs-01.webp"
+      alt="Porsche 911 GT3 RS"
+      class="absolute inset-0 w-full h-full object-cover"
+    />
+    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/30"></div>
   </div>
 
   <!-- Overlay Content -->
   <div class="absolute inset-0 z-10 flex flex-col justify-end pb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <!-- Heading -->
-      <div class="mb-20 lg:mb-36">
+      <div class="mb-10 lg:mb-16">
         <p class="text-[var(--color-primary)] text-sm font-medium mb-2">Over {totalVehicles.toLocaleString()} classified ads listing</p>
         <h1 class="text-4xl sm:text-5xl font-bold text-white font-[family-name:var(--font-heading)] leading-tight hero-heading" style="font-size: clamp(2.25rem, 5vw, 70px);">
           Find what are you<br />looking for
@@ -62,10 +54,25 @@ const colors = ['Color', 'Black', 'White', 'Silver', 'Gray', 'Blue', 'Red', 'Gre
 
       <!-- Search Bar - white card, full width -->
       <div class="bg-white rounded-xl shadow-xl overflow-hidden">
-        <form action="/vehicles" method="get" class="p-4">
+        <!-- Mobile: keyword search -->
+        <form action="/vehicles" method="get" class="p-4 lg:hidden">
+          <input type="hidden" name="condition" id="hero-condition-mobile" value="" />
+          <div class="flex gap-3 items-center">
+            <div class="flex-1 relative">
+              <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input type="text" name="q" placeholder="Search by make, model, or keyword..." class="w-full bg-white border border-gray-200 rounded-xl pl-12 pr-4 py-3 text-sm text-gray-700 placeholder-gray-400 outline-none focus:border-[var(--color-primary)] transition-colors" />
+            </div>
+            <button type="submit" class="bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-6 py-3 rounded-xl font-semibold transition-all text-sm whitespace-nowrap shrink-0">
+              Search
+            </button>
+          </div>
+        </form>
+
+        <!-- Desktop: dropdown filters -->
+        <form action="/vehicles" method="get" class="p-4 hidden lg:block">
           <input type="hidden" name="condition" id="hero-condition" value="" />
           <!-- Basic filter row -->
-          <div class="flex flex-wrap lg:flex-nowrap gap-3 items-center">
+          <div class="flex flex-nowrap gap-3 items-center">
             <select name="make" class="filter-select flex-1 min-w-[130px] bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer">
               {makes.map(m => <option value={m === 'Make' ? '' : m}>{m}</option>)}
             </select>
@@ -97,7 +104,7 @@ const colors = ['Color', 'Black', 'White', 'Silver', 'Gray', 'Blue', 'Red', 'Gre
 
           <!-- Advanced filter panel — hidden until funnel toggle -->
           <div id="advanced-filter-panel" class="hidden mt-4 pt-4 border-t border-gray-100">
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            <div class="grid grid-cols-4 gap-3">
               <select name="fuel" class="filter-select w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors cursor-pointer">
                 {fuelTypes.map(f => <option value={f === 'Fuel Type' ? '' : f}>{f}</option>)}
               </select>
@@ -145,40 +152,10 @@ const colors = ['Color', 'Black', 'White', 'Silver', 'Gray', 'Blue', 'Red', 'Gre
 </section>
 
 <script>
-  import Swiper from 'swiper';
-  import { Navigation, Autoplay, EffectFade, Pagination } from 'swiper/modules';
-  import 'swiper/css';
-  import 'swiper/css/navigation';
-  import 'swiper/css/effect-fade';
-  import 'swiper/css/pagination';
-
-  const heroHeadings = [
-    'Find what are you<br />looking for',
-    "Let's find your next drive<br />in your city",
-  ];
-
-  new Swiper('.hero-swiper', {
-    modules: [Navigation, Autoplay, EffectFade, Pagination],
-    pagination: { el: '.hero-pagination', clickable: true },
-    loop: true,
-    effect: 'fade',
-    autoplay: { delay: 5000, disableOnInteraction: false },
-    navigation: { nextEl: '.hero-next', prevEl: '.hero-prev' },
-    speed: 800,
-    on: {
-      slideChange: function () {
-        const heading = document.querySelector('.hero-heading');
-        if (heading) {
-          const idx = this.realIndex % heroHeadings.length;
-          heading.innerHTML = heroHeadings[idx];
-        }
-      },
-    },
-  });
-
   // Hero tabs - pill button style (orange active, dark inactive)
   const heroTabs = document.querySelectorAll<HTMLButtonElement>('.hero-tab');
   const condInput = document.getElementById('hero-condition') as HTMLInputElement;
+  const condInputMobile = document.getElementById('hero-condition-mobile') as HTMLInputElement;
 
   heroTabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -190,9 +167,9 @@ const colors = ['Color', 'Black', 'White', 'Silver', 'Gray', 'Blue', 'Red', 'Gre
       tab.classList.remove('bg-[var(--color-dark)]');
 
       const val = tab.dataset.tab;
-      if (condInput) {
-        condInput.value = val === 'new' ? 'New' : val === 'used' ? 'Used' : '';
-      }
+      const condVal = val === 'new' ? 'New' : val === 'used' ? 'Used' : '';
+      if (condInput) condInput.value = condVal;
+      if (condInputMobile) condInputMobile.value = condVal;
     });
   });
 
