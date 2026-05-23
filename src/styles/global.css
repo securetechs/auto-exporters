@@ -80,8 +80,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Tab active states */
 .tab-btn {
-  padding: 0.5rem 0;
-  margin-right: 1.5rem;
+  padding: 0.625rem 1rem;
   font-weight: 500;
   transition: all 0.2s;
   cursor: pointer;

@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import VehicleCard from './VehicleCard.astro';
 
 const allVehicles = await getCollection('vehicles');
-const vehicles = allVehicles.sort((a, b) => b.data.price - a.data.price).slice(0, 4);
+const vehicles = allVehicles.sort((a, b) => b.data.price - a.data.price);
 
 // Get unique body types from actual vehicles
 const bodyTypes = ['All Cars', ...new Set(allVehicles.map(v => v.data.bodyType))];
@@ -80,22 +80,34 @@ const bodyTypes = ['All Cars', ...new Set(allVehicles.map(v => v.data.bodyType))
 
 <script>
   const tabs = document.querySelectorAll('#body-type-tabs .tab-btn');
-  const items = document.querySelectorAll('.vehicle-item');
+  const mobileGrid = document.getElementById('body-type-grid')!;
+  const desktopGrid = document.getElementById('body-type-grid-desktop')!;
+  const MAX_VISIBLE = 4;
+
+  function filterByType(type: string) {
+    [mobileGrid, desktopGrid].forEach(grid => {
+      const items = grid.querySelectorAll<HTMLElement>('.vehicle-item');
+      let count = 0;
+      items.forEach(item => {
+        const matches = type === 'All Cars' || item.dataset.body === type;
+        if (matches && count < MAX_VISIBLE) {
+          item.style.display = '';
+          count++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    });
+  }
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      const type = (tab as HTMLElement).dataset.bodyType;
-
-      items.forEach(item => {
-        const el = item as HTMLElement;
-        if (type === 'All Cars' || el.dataset.body === type) {
-          el.style.display = '';
-        } else {
-          el.style.display = 'none';
-        }
-      });
+      filterByType((tab as HTMLElement).dataset.bodyType || 'All Cars');
     });
   });
+
+  // Initial: show first 4
+  filterByType('All Cars');
 </script>

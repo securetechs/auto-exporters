@@ -45,11 +45,11 @@ const hasImages = images && images.length > 0;
       <nav class="breadcrumb flex items-center gap-2 text-sm text-gray-400 overflow-x-auto scrollbar-hide" style="scrollbar-width: none;">
         <a href="/" class="hover:text-[var(--color-primary)] transition-colors">Home</a>
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <a href="/vehicles" class="hover:text-[var(--color-primary)] transition-colors">Vehicles</a>
+        <a href="/vehicles" class="hover:text-[var(--color-primary)] transition-colors">Cars</a>
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <a href={`/vehicles?make=${make}`} class="hover:text-[var(--color-primary)] transition-colors whitespace-nowrap">{make}</a>
+        <a href={`/vehicles?make=${make.replace(/ /g, '+')}`} class="hover:text-[var(--color-primary)] transition-colors whitespace-nowrap">{make}</a>
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <a href={`/vehicles?make=${make}&model=${model}`} class="hover:text-[var(--color-primary)] transition-colors whitespace-nowrap">{model}</a>
+        <a href={`/vehicles?make=${make.replace(/ /g, '+')}&model=${model.replace(/ /g, '+')}`} class="hover:text-[var(--color-primary)] transition-colors whitespace-nowrap">{model}</a>
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         <span class="text-white truncate">{title}</span>
       </nav>

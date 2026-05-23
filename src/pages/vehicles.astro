@@ -11,11 +11,16 @@ const years = [...new Set(allVehicles.map(v => v.data.year))].sort((a, b) => b -
 const fuels = [...new Set(allVehicles.map(v => v.data.fuel))].sort();
 
 const makeModelsMap: Record<string, string[]> = {};
+const makeBodyTypesMap: Record<string, string[]> = {};
+const makeYearsMap: Record<string, number[]> = {};
 allVehicles.forEach(v => {
-  if (!makeModelsMap[v.data.make]) makeModelsMap[v.data.make] = [];
-  if (!makeModelsMap[v.data.make].includes(v.data.model)) {
-    makeModelsMap[v.data.make].push(v.data.model);
-  }
+  const mk = v.data.make;
+  if (!makeModelsMap[mk]) makeModelsMap[mk] = [];
+  if (!makeModelsMap[mk].includes(v.data.model)) makeModelsMap[mk].push(v.data.model);
+  if (!makeBodyTypesMap[mk]) makeBodyTypesMap[mk] = [];
+  if (!makeBodyTypesMap[mk].includes(v.data.bodyType)) makeBodyTypesMap[mk].push(v.data.bodyType);
+  if (!makeYearsMap[mk]) makeYearsMap[mk] = [];
+  if (!makeYearsMap[mk].includes(v.data.year)) makeYearsMap[mk].push(v.data.year);
 });
 
 const vehicles = allVehicles.sort((a, b) => {
@@ -27,7 +32,7 @@ const vehicles = allVehicles.sort((a, b) => {
 
 <Layout title="Vehicles - AutoDeal" description="Browse our inventory of quality UK vehicles for export.">
   <!-- Banner with Breadcrumb -->
-  <section class="bg-gradient-to-br from-[var(--color-dark)] to-gray-900 py-12 lg:py-16">
+  <section class="bg-gradient-to-br from-[var(--color-dark)] to-gray-900 py-12 lg:py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <nav class="breadcrumb flex items-center gap-2 text-sm text-gray-400 mb-4">
         <a href="/" class="hover:text-[var(--color-primary)] transition-colors">Home</a>
@@ -40,16 +45,37 @@ const vehicles = allVehicles.sort((a, b) => {
   </section>
 
   <!-- Filters + Grid -->
-  <section class="py-10 lg:py-14">
+  <section class="py-10 lg:pt-8 lg:pb-14">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="lg:grid lg:grid-cols-[280px_1fr] lg:gap-8">
+      <!-- Mobile Filter Overlay -->
+      <div id="filter-overlay" class="fixed inset-0 bg-black/50 z-[998] hidden lg:hidden"></div>
 
-        <!-- Mobile Filter Overlay -->
-        <div id="filter-overlay" class="fixed inset-0 bg-black/50 z-[998] hidden lg:hidden"></div>
+      <!-- Mobile Quick Filter Bar -->
+      <div class="lg:hidden mb-4 overflow-hidden">
+        <div class="bg-white rounded-xl border border-gray-200 p-3">
+          <div class="flex gap-2 items-center">
+            <select id="quick-make" class="filter-select flex-1 min-w-0 bg-gray-50 border border-gray-200 rounded-lg px-2 py-2.5 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors">
+              <option value="">Make</option>
+              {makes.map(m => <option value={m}>{m}</option>)}
+            </select>
+            <select id="quick-model" disabled class="filter-select flex-1 min-w-0 bg-gray-100 border border-gray-200 rounded-lg px-2 py-2.5 text-sm text-gray-400 outline-none focus:border-[var(--color-primary)] transition-colors cursor-not-allowed">
+              <option value="">Model</option>
+            </select>
+            <button id="mobile-filter-open" class="shrink-0 w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-[var(--color-primary)] hover:bg-orange-50 hover:border-[var(--color-primary)] transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+            </button>
+            <button id="quick-search" class="shrink-0 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-3 h-10 rounded-lg font-semibold transition-all text-sm">
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="lg:grid lg:grid-cols-[280px_1fr] lg:gap-8 lg:items-start">
 
         <!-- Sidebar Filters -->
-        <aside id="filter-sidebar" class="fixed top-0 left-0 h-full w-[300px] bg-white z-[999] transform -translate-x-full transition-transform duration-300 ease-in-out lg:relative lg:transform-none lg:translate-x-0 lg:w-auto lg:z-auto overflow-y-auto">
-          <div class="bg-white lg:rounded-2xl lg:border lg:border-gray-200 p-6 lg:sticky lg:top-28">
+        <aside id="filter-sidebar" class="fixed top-0 left-0 h-full w-[300px] bg-white z-[999] transform -translate-x-full transition-transform duration-300 ease-in-out lg:relative lg:transform-none lg:translate-x-0 lg:w-auto lg:h-auto lg:z-auto overflow-y-auto lg:overflow-visible">
+          <div class="bg-white lg:rounded-2xl lg:border lg:border-gray-200 p-6 lg:sticky lg:top-28 lg:mt-[62px]">
             <!-- Mobile drawer header -->
             <div class="flex items-center justify-between mb-5">
               <h2 class="text-lg font-semibold text-gray-900 font-[family-name:var(--font-heading)]">Filters</h2>
@@ -151,27 +177,6 @@ const vehicles = allVehicles.sort((a, b) => {
           </div>
         </aside>
 
-        <!-- Mobile Quick Filter Bar -->
-        <div class="lg:hidden mb-4 col-span-full">
-          <div class="bg-white rounded-xl border border-gray-200 p-3">
-            <div class="flex gap-2 items-center">
-              <select id="quick-make" class="filter-select flex-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors">
-                <option value="">Make</option>
-                {makes.map(m => <option value={m}>{m}</option>)}
-              </select>
-              <select id="quick-model" disabled class="filter-select flex-1 bg-gray-100 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-400 outline-none focus:border-[var(--color-primary)] transition-colors cursor-not-allowed">
-                <option value="">Model</option>
-              </select>
-              <button id="mobile-filter-open" class="shrink-0 w-11 h-11 flex items-center justify-center rounded-lg border border-gray-200 text-[var(--color-primary)] hover:bg-orange-50 hover:border-[var(--color-primary)] transition-colors">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
-              </button>
-              <button id="quick-search" class="shrink-0 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-5 h-11 rounded-lg font-semibold transition-all text-sm">
-                Search
-              </button>
-            </div>
-          </div>
-        </div>
-
         <!-- Results -->
         <div>
           <!-- Results header -->
@@ -238,8 +243,10 @@ const vehicles = allVehicles.sort((a, b) => {
   </section>
 </Layout>
 
-<script is:inline define:vars={{ makeModelsMap }}>
+<script is:inline define:vars={{ makeModelsMap, makeBodyTypesMap, makeYearsMap }}>
   window.__makeModelsMap = makeModelsMap;
+  window.__makeBodyTypesMap = makeBodyTypesMap;
+  window.__makeYearsMap = makeYearsMap;
 </script>
 
 <script>
@@ -269,6 +276,8 @@ const vehicles = allVehicles.sort((a, b) => {
   const bodySelect = form.querySelector('select[name="body"]') as HTMLSelectElement;
   const yearSelect = form.querySelector('select[name="year"]') as HTMLSelectElement;
   const makeModels = (window as any).__makeModelsMap as Record<string, string[]>;
+  const makeBodyTypes = (window as any).__makeBodyTypesMap as Record<string, string[]>;
+  const makeYears = (window as any).__makeYearsMap as Record<string, number[]>;
 
   function enableSelect(sel: HTMLSelectElement, defaultText: string) {
     sel.disabled = false;
@@ -307,8 +316,32 @@ const vehicles = allVehicles.sort((a, b) => {
         opt.textContent = m;
         modelSelect.appendChild(opt);
       });
-      // Enable Body Type and Year
+      // Populate and enable Body Type
+      bodySelect.innerHTML = '';
+      const bodyDefault = document.createElement('option');
+      bodyDefault.value = '';
+      bodyDefault.textContent = 'All Body Types';
+      bodySelect.appendChild(bodyDefault);
+      (makeBodyTypes[make] || []).sort().forEach(b => {
+        const opt = document.createElement('option');
+        opt.value = b;
+        opt.textContent = b;
+        bodySelect.appendChild(opt);
+      });
       enableSelect(bodySelect, 'All Body Types');
+
+      // Populate and enable Year
+      yearSelect.innerHTML = '';
+      const yearDefault = document.createElement('option');
+      yearDefault.value = '';
+      yearDefault.textContent = 'All Years';
+      yearSelect.appendChild(yearDefault);
+      (makeYears[make] || []).sort((a, b) => b - a).forEach(y => {
+        const opt = document.createElement('option');
+        opt.value = String(y);
+        opt.textContent = String(y);
+        yearSelect.appendChild(opt);
+      });
       enableSelect(yearSelect, 'All Years');
     } else {
       // Disable Model
@@ -371,7 +404,7 @@ const vehicles = allVehicles.sort((a, b) => {
       if ((s as HTMLSelectElement).value) params.set(s.name, (s as HTMLSelectElement).value);
     });
     if (sortSelect.value !== 'featured') params.set('sort', sortSelect.value);
-    const qs = params.toString();
+    const qs = params.toString().replace(/%20/g, '+');
     window.history.replaceState({}, '', qs ? `${window.location.pathname}?${qs}` : window.location.pathname);
   }
 
