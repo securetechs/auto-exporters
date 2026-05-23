@@ -21,10 +21,10 @@ const bodyTypes = ['All Cars', ...new Set(allVehicles.map(v => v.data.bodyType))
     </div>
 
     <!-- Tabs -->
-    <div class="flex flex-wrap gap-2 mb-8" id="body-type-tabs">
+    <div class="flex gap-2 mb-8 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide" id="body-type-tabs" style="-webkit-overflow-scrolling: touch; scrollbar-width: none;">
       {bodyTypes.map((type, i) => (
         <button
-          class={`tab-btn text-sm ${i === 0 ? 'active' : ''}`}
+          class={`tab-btn text-sm whitespace-nowrap shrink-0 ${i === 0 ? 'active' : ''}`}
           data-body-type={type}
         >
           {type}
@@ -32,10 +32,10 @@ const bodyTypes = ['All Cars', ...new Set(allVehicles.map(v => v.data.bodyType))
       ))}
     </div>
 
-    <!-- Mobile: vertical cards, single column -->
-    <div class="grid grid-cols-1 gap-4 md:hidden" id="body-type-grid">
+    <!-- Mobile: vertical cards, two columns -->
+    <div class="grid grid-cols-2 gap-3 md:hidden" id="body-type-grid">
       {vehicles.map(vehicle => (
-        <div class="vehicle-item" data-body={vehicle.data.bodyType}>
+        <div class="vehicle-item h-full" data-body={vehicle.data.bodyType}>
           <VehicleCard
             slug={vehicle.data.slug}
             title={vehicle.data.title}
@@ -57,7 +57,7 @@ const bodyTypes = ['All Cars', ...new Set(allVehicles.map(v => v.data.bodyType))
     <!-- Desktop: horizontal cards, 2 columns -->
     <div class="hidden md:grid md:grid-cols-2 gap-6" id="body-type-grid-desktop">
       {vehicles.map(vehicle => (
-        <div class="vehicle-item" data-body={vehicle.data.bodyType}>
+        <div class="vehicle-item h-full" data-body={vehicle.data.bodyType}>
           <VehicleCard
             slug={vehicle.data.slug}
             title={vehicle.data.title}

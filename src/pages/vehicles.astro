@@ -44,12 +44,21 @@ const vehicles = allVehicles.sort((a, b) => {
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="lg:grid lg:grid-cols-[280px_1fr] lg:gap-8">
 
+        <!-- Mobile Filter Overlay -->
+        <div id="filter-overlay" class="fixed inset-0 bg-black/50 z-[998] hidden lg:hidden"></div>
+
         <!-- Sidebar Filters -->
-        <aside>
-          <div class="bg-white rounded-2xl border border-gray-200 p-6 lg:sticky lg:top-28">
+        <aside id="filter-sidebar" class="fixed top-0 left-0 h-full w-[300px] bg-white z-[999] transform -translate-x-full transition-transform duration-300 ease-in-out lg:relative lg:transform-none lg:translate-x-0 lg:w-auto lg:z-auto overflow-y-auto">
+          <div class="bg-white lg:rounded-2xl lg:border lg:border-gray-200 p-6 lg:sticky lg:top-28">
+            <!-- Mobile drawer header -->
             <div class="flex items-center justify-between mb-5">
               <h2 class="text-lg font-semibold text-gray-900 font-[family-name:var(--font-heading)]">Filters</h2>
-              <button id="clear-filters" class="text-xs text-[var(--color-primary)] hover:underline font-medium hidden">Clear All</button>
+              <div class="flex items-center gap-3">
+                <button id="clear-filters" class="text-xs text-[var(--color-primary)] hover:underline font-medium hidden">Clear All</button>
+                <button id="filter-close" class="lg:hidden p-1 text-gray-500 hover:text-gray-700" aria-label="Close filters">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
             </div>
 
             <form id="filter-form" class="space-y-5">
@@ -70,16 +79,16 @@ const vehicles = allVehicles.sort((a, b) => {
 
               <div>
                 <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Body Type</label>
-                <select name="body" class="filter-select w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all">
-                  <option value="">All Body Types</option>
+                <select name="body" disabled class="filter-select w-full bg-gray-100 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-400 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all cursor-not-allowed">
+                  <option value="">Select Make first</option>
                   {bodyTypes.map(b => <option value={b}>{b}</option>)}
                 </select>
               </div>
 
               <div>
                 <label class="block text-xs font-medium text-gray-500 mb-1.5 uppercase tracking-wider">Year</label>
-                <select name="year" class="filter-select w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-700 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all">
-                  <option value="">All Years</option>
+                <select name="year" disabled class="filter-select w-full bg-gray-100 border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-400 focus:ring-2 focus:ring-[var(--color-primary)]/20 focus:border-[var(--color-primary)] outline-none transition-all cursor-not-allowed">
+                  <option value="">Select Make first</option>
                   {years.map(y => <option value={y}>{y}</option>)}
                 </select>
               </div>
@@ -90,8 +99,8 @@ const vehicles = allVehicles.sort((a, b) => {
                 <div class="space-y-2">
                   <input type="range" id="price-range" min="0" max="100000" step="5000" value="100000" class="w-full" />
                   <div class="flex justify-between text-xs text-gray-500">
-                    <span>$0</span>
-                    <span id="price-range-label" class="font-medium text-[var(--color-primary)]">$100,000</span>
+                    <span>£0</span>
+                    <span id="price-range-label" class="font-medium text-[var(--color-primary)]">£100,000</span>
                   </div>
                 </div>
               </div>
@@ -135,12 +144,33 @@ const vehicles = allVehicles.sort((a, b) => {
                 </div>
               </div>
 
-              <button type="button" id="mobile-apply" class="lg:hidden w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white py-3 rounded-lg font-semibold transition-all text-sm">
-                Apply Filters
+              <button type="button" id="mobile-apply" class="lg:hidden w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white py-3 rounded-lg font-semibold transition-all text-sm mt-2">
+                Show Results
               </button>
             </form>
           </div>
         </aside>
+
+        <!-- Mobile Quick Filter Bar -->
+        <div class="lg:hidden mb-4 col-span-full">
+          <div class="bg-white rounded-xl border border-gray-200 p-3">
+            <div class="flex gap-2 items-center">
+              <select id="quick-make" class="filter-select flex-1 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-500 outline-none focus:border-[var(--color-primary)] transition-colors">
+                <option value="">Make</option>
+                {makes.map(m => <option value={m}>{m}</option>)}
+              </select>
+              <select id="quick-model" disabled class="filter-select flex-1 bg-gray-100 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-400 outline-none focus:border-[var(--color-primary)] transition-colors cursor-not-allowed">
+                <option value="">Model</option>
+              </select>
+              <button id="mobile-filter-open" class="shrink-0 w-11 h-11 flex items-center justify-center rounded-lg border border-gray-200 text-[var(--color-primary)] hover:bg-orange-50 hover:border-[var(--color-primary)] transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
+              </button>
+              <button id="quick-search" class="shrink-0 bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white px-5 h-11 rounded-lg font-semibold transition-all text-sm">
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
 
         <!-- Results -->
         <div>
@@ -157,18 +187,14 @@ const vehicles = allVehicles.sort((a, b) => {
                 <option value="year-new">Year: Newest</option>
                 <option value="mileage-low">Mileage: Lowest</option>
               </select>
-              <button id="mobile-filter-toggle" class="lg:hidden flex items-center gap-2 bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-700">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>
-                Filters
-              </button>
             </div>
           </div>
 
           <!-- Vehicle Grid -->
-          <div id="vehicle-grid" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div id="vehicle-grid" class="grid grid-cols-2 xl:grid-cols-3 gap-3 sm:gap-6">
             {vehicles.map(vehicle => (
               <div
-                class="vehicle-grid-item"
+                class="vehicle-grid-item h-full"
                 data-make={vehicle.data.make}
                 data-model={vehicle.data.model}
                 data-year={vehicle.data.year}
@@ -230,18 +256,44 @@ const vehicles = allVehicles.sort((a, b) => {
   const mileageRange = document.getElementById('mileage-range') as HTMLInputElement;
   const mileageLabel = document.getElementById('mileage-range-label')!;
   const paginationEl = document.getElementById('pagination')!;
-  const mobileToggle = document.getElementById('mobile-filter-toggle');
   const mobileApply = document.getElementById('mobile-apply');
-  const sidebar = form.closest('aside')!;
+  const sidebar = document.getElementById('filter-sidebar')!;
+  const filterOverlay = document.getElementById('filter-overlay');
+  const filterClose = document.getElementById('filter-close');
+  const mobileFilterOpen = document.getElementById('mobile-filter-open');
+  const quickMake = document.getElementById('quick-make') as HTMLSelectElement;
+  const quickModel = document.getElementById('quick-model') as HTMLSelectElement;
+  const quickSearch = document.getElementById('quick-search');
   const makeSelect = form.querySelector('select[name="make"]') as HTMLSelectElement;
   const modelSelect = form.querySelector('select[name="model"]') as HTMLSelectElement;
+  const bodySelect = form.querySelector('select[name="body"]') as HTMLSelectElement;
+  const yearSelect = form.querySelector('select[name="year"]') as HTMLSelectElement;
   const makeModels = (window as any).__makeModelsMap as Record<string, string[]>;
 
-  // Cascading: populate Model when Make changes
+  function enableSelect(sel: HTMLSelectElement, defaultText: string) {
+    sel.disabled = false;
+    sel.classList.remove('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
+    sel.classList.add('bg-gray-50', 'text-gray-700', 'cursor-pointer');
+    // Update the first option text
+    const first = sel.querySelector('option[value=""]');
+    if (first) first.textContent = defaultText;
+  }
+
+  function disableSelect(sel: HTMLSelectElement, defaultText: string) {
+    sel.disabled = true;
+    sel.value = '';
+    sel.classList.add('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
+    sel.classList.remove('bg-gray-50', 'text-gray-700', 'cursor-pointer');
+    const first = sel.querySelector('option[value=""]');
+    if (first) first.textContent = defaultText;
+  }
+
+  // Cascading: populate Model, enable Body Type & Year when Make changes
   makeSelect.addEventListener('change', () => {
     const make = makeSelect.value;
     modelSelect.innerHTML = '';
     if (make && makeModels[make]) {
+      // Enable Model
       modelSelect.disabled = false;
       modelSelect.classList.remove('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
       modelSelect.classList.add('bg-gray-50', 'text-gray-700', 'cursor-pointer');
@@ -255,7 +307,11 @@ const vehicles = allVehicles.sort((a, b) => {
         opt.textContent = m;
         modelSelect.appendChild(opt);
       });
+      // Enable Body Type and Year
+      enableSelect(bodySelect, 'All Body Types');
+      enableSelect(yearSelect, 'All Years');
     } else {
+      // Disable Model
       modelSelect.disabled = true;
       modelSelect.classList.add('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
       modelSelect.classList.remove('bg-gray-50', 'text-gray-700', 'cursor-pointer');
@@ -263,6 +319,9 @@ const vehicles = allVehicles.sort((a, b) => {
       defaultOpt.value = '';
       defaultOpt.textContent = 'Select Make first';
       modelSelect.appendChild(defaultOpt);
+      // Disable Body Type and Year
+      disableSelect(bodySelect, 'Select Make first');
+      disableSelect(yearSelect, 'Select Make first');
     }
     currentPage = 1;
     applyFilters();
@@ -273,10 +332,35 @@ const vehicles = allVehicles.sort((a, b) => {
 
   function initFromURL() {
     const params = new URLSearchParams(window.location.search);
+    // Process make first to trigger cascading
+    const makeVal = params.get('make');
+    if (makeVal) {
+      makeSelect.value = makeVal;
+      makeSelect.dispatchEvent(new Event('change'));
+    }
+    // Then set remaining selects
     form.querySelectorAll('select').forEach(s => {
-      const val = params.get(s.name);
-      if (val) (s as HTMLSelectElement).value = val;
+      const sel = s as HTMLSelectElement;
+      if (sel.name === 'make') return; // already handled
+      let val = params.get(sel.name);
+      // Handle bodyType alias → body select
+      if (!val && sel.name === 'body') val = params.get('bodyType');
+      if (val) {
+        sel.value = val;
+      }
     });
+    // Handle condition from URL
+    const condition = params.get('condition');
+    if (condition) {
+      const cb = form.querySelector<HTMLInputElement>(`input[name="condition"][value="${condition}"]`);
+      if (cb) cb.checked = true;
+    }
+    // Handle search query
+    const q = params.get('q');
+    if (q) {
+      // Store for filtering
+      (window as any).__searchQuery = q.toLowerCase();
+    }
     const sort = params.get('sort');
     if (sort) sortSelect.value = sort;
   }
@@ -294,7 +378,7 @@ const vehicles = allVehicles.sort((a, b) => {
   // Range slider labels
   priceRange.addEventListener('input', () => {
     const v = Number(priceRange.value);
-    priceLabel.textContent = v >= 100000 ? '$100,000+' : '$' + v.toLocaleString();
+    priceLabel.textContent = v >= 100000 ? '£100,000+' : '£' + v.toLocaleString();
     applyFilters();
   });
   mileageRange.addEventListener('input', () => {
@@ -392,14 +476,16 @@ const vehicles = allVehicles.sort((a, b) => {
   function clearAll() {
     form.querySelectorAll('select').forEach(s => (s as HTMLSelectElement).value = '');
     form.querySelectorAll('input[type="checkbox"]').forEach(c => (c as HTMLInputElement).checked = false);
-    priceRange.value = '100000'; priceLabel.textContent = '$100,000';
+    priceRange.value = '100000'; priceLabel.textContent = '£100,000';
     mileageRange.value = '100000'; mileageLabel.textContent = '100,000 mi';
     sortSelect.value = 'featured';
-    // Reset model to disabled
+    // Reset model, body type, year to disabled
     modelSelect.disabled = true;
     modelSelect.innerHTML = '<option value="">Select Make first</option>';
     modelSelect.classList.add('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
     modelSelect.classList.remove('bg-gray-50', 'text-gray-700', 'cursor-pointer');
+    disableSelect(bodySelect, 'Select Make first');
+    disableSelect(yearSelect, 'Select Make first');
     currentPage = 1;
     applyFilters();
   }
@@ -411,27 +497,62 @@ const vehicles = allVehicles.sort((a, b) => {
   clearBtn.addEventListener('click', clearAll);
   noResultsClear?.addEventListener('click', clearAll);
 
-  mobileToggle?.addEventListener('click', () => {
-    sidebar.classList.toggle('hidden');
-    sidebar.classList.toggle('fixed');
-    sidebar.classList.toggle('inset-0');
-    sidebar.classList.toggle('z-50');
-    sidebar.classList.toggle('bg-white');
-    sidebar.classList.toggle('overflow-y-auto');
-    sidebar.classList.toggle('p-6');
-  });
+  function openFilterDrawer() {
+    sidebar.classList.remove('-translate-x-full');
+    filterOverlay?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeFilterDrawer() {
+    sidebar.classList.add('-translate-x-full');
+    filterOverlay?.classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  mobileFilterOpen?.addEventListener('click', openFilterDrawer);
+  filterClose?.addEventListener('click', closeFilterDrawer);
+  filterOverlay?.addEventListener('click', closeFilterDrawer);
   mobileApply?.addEventListener('click', () => {
-    sidebar.classList.add('hidden');
-    sidebar.classList.remove('fixed', 'inset-0', 'z-50', 'bg-white', 'overflow-y-auto', 'p-6');
+    closeFilterDrawer();
+    currentPage = 1;
+    applyFilters();
+  });
+
+  // Quick filter bar — sync with sidebar form
+  quickMake?.addEventListener('change', () => {
+    makeSelect.value = quickMake.value;
+    makeSelect.dispatchEvent(new Event('change'));
+    // Sync quick model dropdown
+    if (quickMake.value && makeModels[quickMake.value]) {
+      quickModel.disabled = false;
+      quickModel.classList.remove('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
+      quickModel.classList.add('bg-gray-50', 'text-gray-700', 'cursor-pointer');
+      quickModel.innerHTML = '<option value="">Model</option>';
+      makeModels[quickMake.value].sort().forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        quickModel.appendChild(opt);
+      });
+    } else {
+      quickModel.disabled = true;
+      quickModel.classList.add('bg-gray-100', 'text-gray-400', 'cursor-not-allowed');
+      quickModel.classList.remove('bg-gray-50', 'text-gray-700', 'cursor-pointer');
+      quickModel.innerHTML = '<option value="">Model</option>';
+    }
+  });
+
+  quickModel?.addEventListener('change', () => {
+    modelSelect.value = quickModel.value;
+    currentPage = 1;
+    applyFilters();
+  });
+
+  quickSearch?.addEventListener('click', () => {
+    currentPage = 1;
+    applyFilters();
   });
 
   initFromURL();
   applyFilters();
 </script>
 
-<style>
-  @media (max-width: 1023px) {
-    aside { display: none; }
-    aside:not(.hidden) { display: block; }
-  }
-</style>

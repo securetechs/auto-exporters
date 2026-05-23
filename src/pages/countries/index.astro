@@ -57,12 +57,12 @@ const countries = allCountries.filter(c => !c.data.parentSlug);
               </div>
 
               <!-- Brands -->
-              <div class="flex flex-wrap gap-1.5 mt-4">
+              <div class="flex gap-1.5 mt-4 overflow-x-auto scrollbar-hide" style="scrollbar-width: none;">
                 {country.data.popularBrands.slice(0, 3).map((brand) => (
-                  <span class="bg-gray-50 text-xs text-gray-500 px-2 py-1 rounded">{brand}</span>
+                  <span class="bg-gray-50 text-xs text-gray-500 px-2 py-1 rounded whitespace-nowrap shrink-0">{brand}</span>
                 ))}
                 {country.data.popularBrands.length > 3 && (
-                  <span class="bg-gray-50 text-xs text-gray-500 px-2 py-1 rounded">+{country.data.popularBrands.length - 3}</span>
+                  <span class="bg-gray-50 text-xs text-gray-500 px-2 py-1 rounded whitespace-nowrap shrink-0">+{country.data.popularBrands.length - 3}</span>
                 )}
               </div>
             </div>

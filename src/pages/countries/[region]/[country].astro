@@ -79,7 +79,7 @@ const siblings = allCountries.filter(c => c.data.parentSlug === parentSlug && c.
           <!-- Popular Brands -->
           <div class="bg-gray-50 rounded-2xl p-6">
             <h3 class="font-semibold text-gray-900 mb-4 font-[family-name:var(--font-heading)]">Popular Brands</h3>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex gap-2 overflow-x-auto scrollbar-hide" style="scrollbar-width: none;">
               {popularBrands.map((brand) => (
                 <span class="bg-white border border-gray-200 text-sm text-gray-700 px-3 py-1.5 rounded-full">{brand}</span>
               ))}

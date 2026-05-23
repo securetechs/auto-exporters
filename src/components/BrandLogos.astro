@@ -34,12 +34,12 @@ allVehicles.forEach(v => {
 });
 ---
 
-<section class="py-14 bg-white">
+<section class="py-14 bg-white overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Header with tabs -->
-    <div class="flex items-center justify-between mb-10">
-      <h2 class="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-900 font-[family-name:var(--font-heading)] shrink-0 mr-3">Popular Car Makes & Body Types</h2>
-      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
+      <h2 class="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-900 font-[family-name:var(--font-heading)]">Popular Car Makes & Body Types</h2>
+      <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto shrink-0">
         <button class="brand-tab px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold text-gray-600 border border-gray-200 hover:bg-[var(--color-primary)] hover:text-white hover:border-[var(--color-primary)] transition-all flex items-center gap-1 sm:gap-1.5 whitespace-nowrap" data-tab="car-makes">
           Car makes
           <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -107,15 +107,15 @@ allVehicles.forEach(v => {
   new Swiper('.body-type-swiper', {
     modules: [Autoplay, Pagination],
     slidesPerView: 2,
-    spaceBetween: 30,
+    spaceBetween: 12,
     loop: true,
     autoplay: { delay: 4000, disableOnInteraction: false },
     pagination: { el: '.body-type-pagination', clickable: true },
     breakpoints: {
-      480: { slidesPerView: 3 },
-      640: { slidesPerView: 4 },
-      768: { slidesPerView: 5 },
-      1024: { slidesPerView: 6 },
+      480: { slidesPerView: 3, spaceBetween: 16 },
+      640: { slidesPerView: 4, spaceBetween: 20 },
+      768: { slidesPerView: 5, spaceBetween: 24 },
+      1024: { slidesPerView: 6, spaceBetween: 30 },
     },
   });
 

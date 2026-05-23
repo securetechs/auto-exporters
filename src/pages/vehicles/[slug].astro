@@ -42,11 +42,15 @@ const hasImages = images && images.length > 0;
   <!-- Banner with Breadcrumb -->
   <section class="bg-gradient-to-br from-[var(--color-dark)] to-gray-900 py-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <nav class="breadcrumb flex items-center gap-2 text-sm text-gray-400">
+      <nav class="breadcrumb flex items-center gap-2 text-sm text-gray-400 overflow-x-auto scrollbar-hide" style="scrollbar-width: none;">
         <a href="/" class="hover:text-[var(--color-primary)] transition-colors">Home</a>
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         <a href="/vehicles" class="hover:text-[var(--color-primary)] transition-colors">Vehicles</a>
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <a href={`/vehicles?make=${make}`} class="hover:text-[var(--color-primary)] transition-colors whitespace-nowrap">{make}</a>
+        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <a href={`/vehicles?make=${make}&model=${model}`} class="hover:text-[var(--color-primary)] transition-colors whitespace-nowrap">{model}</a>
+        <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         <span class="text-white truncate">{title}</span>
       </nav>
     </div>
@@ -104,11 +108,11 @@ const hasImages = images && images.length > 0;
               <span class="bg-gray-100 text-gray-600 text-xs font-semibold px-2.5 py-1 rounded">{year}</span>
             </div>
             <h1 class="text-2xl font-bold text-gray-900 font-[family-name:var(--font-heading)]">{title}</h1>
-            <div class="text-3xl font-bold text-[var(--color-primary)] mt-2 font-[family-name:var(--font-heading)]">${price.toLocaleString()}</div>
+            <div class="text-3xl font-bold text-[var(--color-primary)] mt-2 font-[family-name:var(--font-heading)]">£{price.toLocaleString()}</div>
           </div>
 
           <!-- Sticky Tab Navigation -->
-          <div class="sticky top-16 lg:top-20 z-10 bg-white border-b border-gray-200 mb-8 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 lg:rounded-xl lg:border">
+          <div class="sticky top-[80px] lg:top-[90px] z-10 bg-white border-b border-gray-200 mb-8 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:mx-0 lg:px-0 lg:rounded-xl lg:border">
             <div class="flex gap-1 overflow-x-auto" id="detail-tabs">
               <button class="tab-btn active whitespace-nowrap" data-target="overview-section">Overview</button>
               <button class="tab-btn whitespace-nowrap" data-target="specs-section">Specifications</button>
@@ -173,7 +177,7 @@ const hasImages = images && images.length > 0;
                 <span class="bg-gray-100 text-gray-600 text-xs font-semibold px-2.5 py-1 rounded">{year}</span>
               </div>
               <h1 class="text-xl font-bold text-gray-900 font-[family-name:var(--font-heading)]">{title}</h1>
-              <div class="text-3xl font-bold text-[var(--color-primary)] mt-3 font-[family-name:var(--font-heading)]">${price.toLocaleString()}</div>
+              <div class="text-3xl font-bold text-[var(--color-primary)] mt-3 font-[family-name:var(--font-heading)]">£{price.toLocaleString()}</div>
               <p class="text-sm text-gray-500 mt-2 line-clamp-2">{description}</p>
             </div>
 
@@ -237,11 +241,28 @@ const hasImages = images && images.length > 0;
         </div>
       </div>
 
+      <!-- Desktop Photo Lightbox -->
+      <div id="lightbox" class="hidden fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm items-center justify-center">
+        <button id="lightbox-close" class="absolute top-5 right-5 w-11 h-11 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-10" aria-label="Close">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+        <button id="lightbox-prev" class="absolute left-5 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-10" aria-label="Previous">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button id="lightbox-next" class="absolute right-5 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center text-white transition-colors z-10" aria-label="Next">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+        <img id="lightbox-img" src="" alt="" class="max-w-[90vw] max-h-[85vh] object-contain rounded-lg shadow-2xl" />
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/70 text-sm font-medium">
+          <span id="lightbox-counter"></span>
+        </div>
+      </div>
+
       <!-- Related Vehicles -->
       {related.length > 0 && (
         <div class="mt-16 pt-12 border-t border-gray-200">
           <h2 class="text-2xl font-bold text-gray-900 font-[family-name:var(--font-heading)] mb-8">Similar Vehicles</h2>
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
             {related.map(v => (
               <VehicleCard
                 slug={v.data.slug}
@@ -267,12 +288,13 @@ const hasImages = images && images.length > 0;
 <!-- Gallery Script -->
 {hasImages && images.length > 1 && (
   <script is:inline define:vars={{ images }}>
-    const mainImg = document.getElementById('main-image');
-    const counter = document.getElementById('img-counter');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
-    const thumbs = document.querySelectorAll('.thumb-btn');
-    let current = 0;
+    var mainImg = document.getElementById('main-image');
+    var counter = document.getElementById('img-counter');
+    var prevBtn = document.getElementById('prev-btn');
+    var nextBtn = document.getElementById('next-btn');
+    var thumbs = document.querySelectorAll('.thumb-btn');
+    var current = 0;
+
     function showImage(index) {
       current = index;
       mainImg.src = images[current];
@@ -285,6 +307,70 @@ const hasImages = images && images.length > 0;
     nextBtn && nextBtn.addEventListener('click', function() { showImage((current + 1) % images.length); });
     thumbs.forEach(function(t) { t.addEventListener('click', function() { showImage(Number(t.dataset.index)); }); });
     showImage(0);
+
+    // Desktop-only Lightbox
+    var isDesktop = window.matchMedia('(min-width: 1024px)');
+    var lightbox = document.getElementById('lightbox');
+    var lightboxImg = document.getElementById('lightbox-img');
+    var lightboxCounter = document.getElementById('lightbox-counter');
+    var lightboxClose = document.getElementById('lightbox-close');
+    var lightboxPrev = document.getElementById('lightbox-prev');
+    var lightboxNext = document.getElementById('lightbox-next');
+    var lightboxIndex = 0;
+
+    function openLightbox(idx) {
+      if (!isDesktop.matches) return;
+      lightboxIndex = idx;
+      lightboxImg.src = images[lightboxIndex];
+      lightboxCounter.textContent = (lightboxIndex + 1) + ' / ' + images.length;
+      lightbox.classList.remove('hidden');
+      lightbox.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox() {
+      lightbox.classList.add('hidden');
+      lightbox.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    function lightboxNav(dir) {
+      lightboxIndex = (lightboxIndex + dir + images.length) % images.length;
+      lightboxImg.src = images[lightboxIndex];
+      lightboxCounter.textContent = (lightboxIndex + 1) + ' / ' + images.length;
+    }
+
+    // Click main image to open lightbox
+    mainImg.style.cursor = isDesktop.matches ? 'zoom-in' : '';
+    mainImg.addEventListener('click', function() { openLightbox(current); });
+
+    // Click thumbnails to open lightbox
+    thumbs.forEach(function(t) {
+      t.addEventListener('dblclick', function() { openLightbox(Number(t.dataset.index)); });
+    });
+
+    lightboxClose && lightboxClose.addEventListener('click', closeLightbox);
+    lightboxPrev && lightboxPrev.addEventListener('click', function() { lightboxNav(-1); });
+    lightboxNext && lightboxNext.addEventListener('click', function() { lightboxNav(1); });
+
+    // Close on backdrop click
+    lightbox && lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) closeLightbox();
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (lightbox.classList.contains('hidden')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lightboxNav(-1);
+      if (e.key === 'ArrowRight') lightboxNav(1);
+    });
+
+    // Update cursor on resize
+    isDesktop.addEventListener('change', function() {
+      mainImg.style.cursor = isDesktop.matches ? 'zoom-in' : '';
+      if (!isDesktop.matches) closeLightbox();
+    });
   </script>
 )}
 

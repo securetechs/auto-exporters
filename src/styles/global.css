@@ -15,12 +15,14 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
   font-family: var(--font-body);
   color: #333;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -72,6 +74,9 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 18px !important;
   font-weight: 700;
 }
+
+/* Hide scrollbar for horizontal scroll tabs */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
 
 /* Tab active states */
 .tab-btn {
