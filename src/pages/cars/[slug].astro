@@ -45,11 +45,11 @@ const hasImages = images && images.length > 0;
       <nav class="breadcrumb flex items-center gap-2 text-sm text-gray-400 overflow-x-auto scrollbar-hide" style="scrollbar-width: none;">
         <a href="/" class="hover:text-[var(--color-primary)] transition-colors">Home</a>
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <a href="/vehicles" class="hover:text-[var(--color-primary)] transition-colors">Cars</a>
+        <a href="/cars" class="hover:text-[var(--color-primary)] transition-colors">Cars</a>
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <a href={`/vehicles?make=${make.replace(/ /g, '+')}`} class="hover:text-[var(--color-primary)] transition-colors whitespace-nowrap">{make}</a>
+        <a href={`/cars/${make.toLowerCase().replace(/ /g, '-')}`} class="hover:text-[var(--color-primary)] transition-colors whitespace-nowrap">{make}</a>
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        <a href={`/vehicles?make=${make.replace(/ /g, '+')}&model=${model.replace(/ /g, '+')}`} class="hover:text-[var(--color-primary)] transition-colors whitespace-nowrap">{model}</a>
+        <a href={`/cars/${make.toLowerCase().replace(/ /g, '-')}/${model.toLowerCase().replace(/ /g, '-')}`} class="hover:text-[var(--color-primary)] transition-colors whitespace-nowrap">{model}</a>
         <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         <span class="text-white truncate">{title}</span>
       </nav>
@@ -61,7 +61,7 @@ const hasImages = images && images.length > 0;
       <div class="lg:grid lg:grid-cols-[1fr_380px] lg:gap-10">
 
         <!-- Left Column -->
-        <div>
+        <div class="min-w-0">
           <!-- Photo Gallery -->
           <div class="mb-8">
             {hasImages ? (

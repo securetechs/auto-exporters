@@ -60,8 +60,8 @@ const childCountries = allCountries.filter(c => c.data.parentSlug === country.da
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-3 gap-12">
         <!-- Main Content -->
-        <div class="lg:col-span-2">
-          <div class="prose prose-lg max-w-none prose-headings:font-[family-name:var(--font-heading)] prose-headings:text-gray-900 prose-a:text-[var(--color-primary)] prose-strong:text-gray-900">
+        <div class="lg:col-span-2 min-w-0">
+          <div class="prose prose-lg max-w-none prose-headings:font-[family-name:var(--font-heading)] prose-headings:text-gray-900 prose-a:text-[var(--color-primary)] prose-strong:text-gray-900 overflow-hidden break-words">
             <Content />
           </div>
         </div>

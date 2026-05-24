@@ -3,22 +3,22 @@ const navLinks = [
   { name: 'Home', href: '/', color: 'text-[var(--color-primary)]' },
   {
     name: 'Buy Car',
-    href: '/vehicles',
+    href: '/cars',
     dropdown: [
-      { name: 'All Vehicles', href: '/vehicles' },
-      { name: 'SUV', href: '/vehicles?body=SUV' },
-      { name: 'Sedan', href: '/vehicles?body=Sedan' },
-      { name: 'Coupe', href: '/vehicles?body=Coupe' },
+      { name: 'All Vehicles', href: '/cars' },
+      { name: 'SUV', href: '/cars/body/suv' },
+      { name: 'Sedan', href: '/cars/body/sedan' },
+      { name: 'Coupe', href: '/cars/body/coupe' },
     ]
   },
   {
     name: 'Listing',
-    href: '/vehicles',
+    href: '/cars',
     dropdown: [
-      { name: 'All Listings', href: '/vehicles' },
-      { name: 'Featured', href: '/vehicles?featured=true' },
-      { name: 'New Cars', href: '/vehicles?condition=New' },
-      { name: 'Used Cars', href: '/vehicles?condition=Used' },
+      { name: 'All Listings', href: '/cars' },
+      { name: 'Featured', href: '/cars?featured=true' },
+      { name: 'New Cars', href: '/cars?condition=New' },
+      { name: 'Used Cars', href: '/cars?condition=Used' },
     ]
   },
   {
@@ -73,7 +73,7 @@ const navLinks = [
   </div>
 
   <!-- Main Nav -->
-  <nav id="main-nav" class="bg-white border-b border-gray-100">
+  <nav id="main-nav" class="bg-white border-b border-gray-100 relative z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-[80px]">
         <!-- Logo -->
@@ -96,7 +96,7 @@ const navLinks = [
               </a>
               {link.dropdown && (
                 <div class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                  <div class="bg-white rounded-lg shadow-lg border border-gray-100 py-2 min-w-[200px]">
+                  <div class="bg-white rounded-lg shadow-lg border border-gray-100 py-2 min-w-[200px] before:content-[''] before:absolute before:inset-x-0 before:-top-2 before:h-2">
                     {link.dropdown.map(item => (
                       <a href={item.href} class="block px-4 py-2.5 text-sm text-gray-600 hover:text-[var(--color-primary)] hover:bg-gray-50 transition-colors">
                         {item.name}

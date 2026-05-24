@@ -1,6 +1,8 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: OWNER/REPO  # TODO: Replace with your GitHub username/repo (e.g. george/car-export)
   branch: main
+  base_url: https://sveltia-cms-auth.netlify.app
 
 media_folder: "public/images"
 public_folder: "/images"
